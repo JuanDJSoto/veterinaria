@@ -11,9 +11,6 @@
 import java.sql.Connection;
 import java.sql.DriverManager;
 import javax.swing.JOptionPane;
-
-//Si se manejar Github :D
-
 public class Login extends javax.swing.JFrame {
 private static String url="jdbc:sqlite:C:/Users/Juan Soto/Desktop/veterinaria/veterinaria/data.sqlite";
 private static Connection Conn;
