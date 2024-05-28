@@ -24,10 +24,10 @@ public static Connection getConnection(){
         try{
             Conn=DriverManager.getConnection(url);
             if(Conn!=null){
-                JOptionPane.showMessageDialog(null, "exito");
+                JOptionPane.showMessageDialog(null, "Conexión establecida con éxito");
             }
         }catch (Exception e){
-            JOptionPane.showMessageDialog(null, "Error"+e.getMessage());
+            JOptionPane.showMessageDialog(null, "Error: "+e.getMessage());
         }
         return Conn;
     }
@@ -43,8 +43,8 @@ public static Connection getConnection(){
         jButton3 = new javax.swing.JButton();
         jButton1 = new javax.swing.JButton();
         jLabel1 = new javax.swing.JLabel();
-        jButton2 = new javax.swing.JButton();
-        jButton4 = new javax.swing.JButton();
+        btnacceder = new javax.swing.JButton();
+        btnsalirlogin = new javax.swing.JButton();
         txtusuario = new javax.swing.JTextField();
         jLabel2 = new javax.swing.JLabel();
         jLabel3 = new javax.swing.JLabel();
@@ -69,17 +69,17 @@ public static Connection getConnection(){
         jLabel1.setFont(new java.awt.Font("Segoe UI", 0, 24)); // NOI18N
         jLabel1.setText("Login");
 
-        jButton2.setText("Acceder");
-        jButton2.addActionListener(new java.awt.event.ActionListener() {
+        btnacceder.setText("Acceder");
+        btnacceder.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                jButton2ActionPerformed(evt);
+                btnaccederActionPerformed(evt);
             }
         });
 
-        jButton4.setText("Salir");
-        jButton4.addActionListener(new java.awt.event.ActionListener() {
+        btnsalirlogin.setText("Salir");
+        btnsalirlogin.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                jButton4ActionPerformed(evt);
+                btnsalirloginActionPerformed(evt);
             }
         });
 
@@ -97,29 +97,32 @@ public static Connection getConnection(){
                         .addContainerGap()
                         .addComponent(jButton1))
                     .addGroup(layout.createSequentialGroup()
-                        .addGap(199, 199, 199)
+                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                            .addGroup(layout.createSequentialGroup()
+                                .addGap(90, 90, 90)
+                                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                                    .addComponent(jLabel3)
+                                    .addComponent(jLabel2))
+                                .addGap(103, 103, 103))
+                            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
+                                .addContainerGap()
+                                .addComponent(btnacceder)
+                                .addGap(52, 52, 52)))
+                        .addComponent(btnsalirlogin))
+                    .addGroup(layout.createSequentialGroup()
+                        .addGap(195, 195, 195)
                         .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
                             .addComponent(txtusuario)
                             .addComponent(jLabel1)
-                            .addComponent(password, javax.swing.GroupLayout.DEFAULT_SIZE, 166, Short.MAX_VALUE))))
-                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
-            .addGroup(layout.createSequentialGroup()
-                .addGap(84, 84, 84)
-                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
-                    .addComponent(jButton2)
-                    .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                        .addComponent(jLabel3)
-                        .addComponent(jLabel2)))
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 129, Short.MAX_VALUE)
-                .addComponent(jButton4)
-                .addGap(95, 95, 95))
+                            .addComponent(password, javax.swing.GroupLayout.PREFERRED_SIZE, 166, javax.swing.GroupLayout.PREFERRED_SIZE))))
+                .addContainerGap(92, Short.MAX_VALUE))
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(layout.createSequentialGroup()
                 .addContainerGap()
                 .addComponent(jButton1)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                .addGap(31, 31, 31)
                 .addComponent(jLabel1)
                 .addGap(18, 18, 18)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
@@ -131,9 +134,9 @@ public static Connection getConnection(){
                     .addComponent(password, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 46, Short.MAX_VALUE)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(jButton2)
-                    .addComponent(jButton4))
-                .addGap(88, 88, 88))
+                    .addComponent(btnacceder)
+                    .addComponent(btnsalirlogin))
+                .addGap(69, 69, 69))
         );
 
         pack();
@@ -148,12 +151,11 @@ public static Connection getConnection(){
         // TODO add your handling code here:
     }//GEN-LAST:event_jButton3ActionPerformed
 
-    private void jButton2ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton2ActionPerformed
+    private void btnaccederActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnaccederActionPerformed
         // TODO add your handling code here:
         
         String usuario="admin";
         String contraseña="1234";
-        this.txtusuario.requestFocus();
         String Pass=new String(password.getPassword());
         if(txtusuario.getText().equals(usuario)&& Pass.equals(contraseña)){
         new Menu().setVisible(true);
@@ -161,18 +163,18 @@ public static Connection getConnection(){
             this.setVisible(false);
     }
         else{
-                JOptionPane.showMessageDialog(null, "El usuario y la contraseña son incorrectos...","Login",
+                JOptionPane.showMessageDialog(null, "El usuario y/o la contraseña son incorrectos...","Login",
                         JOptionPane.INFORMATION_MESSAGE);
                 this.password.setText("");
                 this.txtusuario.setText("");
                 this.txtusuario.requestFocus();
                 }
-    }//GEN-LAST:event_jButton2ActionPerformed
+    }//GEN-LAST:event_btnaccederActionPerformed
 
-    private void jButton4ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton4ActionPerformed
+    private void btnsalirloginActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnsalirloginActionPerformed
         // TODO add your handling code here:
         System.exit(0);
-    }//GEN-LAST:event_jButton4ActionPerformed
+    }//GEN-LAST:event_btnsalirloginActionPerformed
 
     /**
      * @param args the command line arguments
@@ -210,10 +212,10 @@ public static Connection getConnection(){
     }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
+    private javax.swing.JButton btnacceder;
+    private javax.swing.JButton btnsalirlogin;
     private javax.swing.JButton jButton1;
-    private javax.swing.JButton jButton2;
     private javax.swing.JButton jButton3;
-    private javax.swing.JButton jButton4;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel2;
     private javax.swing.JLabel jLabel3;
