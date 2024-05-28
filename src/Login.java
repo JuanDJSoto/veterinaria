@@ -19,6 +19,7 @@ private static Connection Conn;
      */
     public Login() {
         initComponents();
+        setLocationRelativeTo(null);
     }
 public static Connection getConnection(){
         try{
