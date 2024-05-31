@@ -162,7 +162,11 @@ public static Connection getConnection(){
         new Menu().setVisible(true);
         //new CatalogodeProductos().setVisible(true);
             this.setVisible(false);
-    }
+    }/* if(txtusuario.getText().equals("")&&Pass.equals("")){
+        JOptionPane.showMessageDialog(null, "Favor de ingresar su usuario y contraseña");
+        this.txtusuario.requestFocus();
+        }*/
+    
         else{
                 JOptionPane.showMessageDialog(null, "El usuario y/o la contraseña son incorrectos...","Login",
                         JOptionPane.INFORMATION_MESSAGE);
