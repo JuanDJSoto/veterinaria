@@ -166,6 +166,7 @@ int seleccion = JOptionPane.showOptionDialog( null,"Para generar una cita es nec
  if (seleccion == 0){
            new Altacliente().setVisible(true);
            this.setVisible(false);
+           //:c
  }
     }//GEN-LAST:event_jButton1ActionPerformed
 
