@@ -12,10 +12,17 @@ package POO;
 
 import java.sql.Connection;
 import java.sql.DriverManager;
+import java.sql.ResultSet;
+import java.sql.Statement;
 import javax.swing.JOptionPane;
+import javax.swing.table.DefaultTableModel;
 public class Login extends javax.swing.JFrame {
-private static String url="jdbc:sqlite:C:/Users/Juan Soto/Desktop/veterinaria/veterinaria/data.sqlite";
-private static Connection Conn;
+//private static final String url="jdbc:sqlite:C:/Users/Juan Soto/Documents/NetBeansProjects/veterinaria/data.sqlite";
+private static final String url="jdbc:sqlite:data.sqlite";
+DefaultTableModel model;
+    public static Connection Conn;
+    Statement sent;
+public static String users="0";
     /**
      * Creates new form Login
      */
@@ -27,7 +34,7 @@ public static Connection getConnection(){
         try{
             Conn=DriverManager.getConnection(url);
             if(Conn!=null){
-                JOptionPane.showMessageDialog(null, "Conexión establecida con éxito");
+               // JOptionPane.showMessageDialog(null, "Conexión establecida con éxito");
             }
         }catch (Exception e){
             JOptionPane.showMessageDialog(null, "Error: "+e.getMessage());
@@ -155,20 +162,48 @@ public static Connection getConnection(){
     }//GEN-LAST:event_jButton3ActionPerformed
 
     private void btnaccederActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnaccederActionPerformed
-        // TODO add your handling code here:
+        // TODO add your handling code here
+        String usuario="";
+        String contraseña="";
         
-        String usuario="admin";
-        String contraseña="1234";
+        String sql = "SELECT Password from usuario WHERE Nombre='"
+                +txtusuario.getText()+"'";
+        String usql = "SELECT Nombre from usuario WHERE Password='"
+                +password.getText()+"'";
+        try{
+            Conn = Login.getConnection();
+            sent = Conn.createStatement();
+            ResultSet rs = sent.executeQuery(sql);
+            contraseña = rs.getString(1);
+            Conn.close();
+        }catch (Exception e){
+            JOptionPane.showMessageDialog(null,e.getMessage());
+        }
+        try{
+            Conn = Login.getConnection();
+            sent = Conn.createStatement();
+            ResultSet rs = sent.executeQuery(usql);
+            usuario = rs.getString(1);
+            Conn.close();
+        }catch (Exception e){
+            JOptionPane.showMessageDialog(null,e.getMessage());
+        }
         String Pass=new String(password.getPassword());
         if(txtusuario.getText().equals(usuario)&& Pass.equals(contraseña)){
+            String nsql = "SELECT Nombre from usuario WHERE password='"
+                +password.getText()+"'";
+        try{
+            Conn = Login.getConnection();
+            sent = Conn.createStatement();
+            ResultSet rs = sent.executeQuery(nsql);
+            users = rs.getString(1);
+            Conn.close();
+        }catch (Exception e){
+            JOptionPane.showMessageDialog(null,e.getMessage());
+        }
         new Menu().setVisible(true);
-        //new CatalogodeProductos().setVisible(true);
             this.setVisible(false);
-    }/* if(txtusuario.getText().equals("")&&Pass.equals("")){
-        JOptionPane.showMessageDialog(null, "Favor de ingresar su usuario y contraseña");
-        this.txtusuario.requestFocus();
-        }*/
-    
+    }
         else{
                 JOptionPane.showMessageDialog(null, "El usuario y/o la contraseña son incorrectos...","Login",
                         JOptionPane.INFORMATION_MESSAGE);

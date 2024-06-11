@@ -4,33 +4,47 @@
  */
 package POO;
 
+import static POO.Login.Conn;
 import java.awt.Color;
+import java.sql.Connection;
+import java.sql.ResultSet;
+import java.sql.Statement;
+import javax.swing.JOptionPane;
 
 /**
  *
  * @author Juan Soto
  */
 public class Gestionproductos extends javax.swing.JFrame {
+    String folio="";
+    Connection conn;
+    Statement sent;
     /**
      * Creates new form Gestionprodutos
      */
     String a="0";
     public Gestionproductos() {
         initComponents();
+        setLocationRelativeTo(null);
         if(Menu.VCE=="1"){
-            btnbuscar.setVisible(false);
-            txtID.setEditable(false);
-            //PRUEBA DE CAMBIO DE COLOR PARA CAMPOS BLOQUEADOS
-            txtID.setBackground(Color.BLACK); 
+             B_Nuevo();
         }if(Menu.VCE=="2"){
-            B_editar();
+            B_Editar();
+        }if(Menu.VCE=="3"){
+            B_Eliminar();
         }
         
     }
-    public void Nuevo(){
-        
+    void B_Nuevo(){
+        lbltitulo.setText("Nuevo producto");
+        btnbuscar.setVisible(false);
+        txtID.setEditable(false);
+        //PRUEBA DE CAMBIO DE COLOR PARA CAMPOS BLOQUEADOS
+        txtID.setBackground(Color.BLACK);
     }
-    public void B_editar(){
+    
+    void B_Editar(){
+        lbltitulo.setText("Editar producto");
         txtID.setEditable(true);
         txtnombre.setEditable(false);
         txttipo.setEditable(false);
@@ -38,6 +52,97 @@ public class Gestionproductos extends javax.swing.JFrame {
         txtventa.setEditable(false);
         txtstock.setEditable(false);
         btnbuscar.setVisible(true);
+    }
+    
+    void B_Eliminar(){
+        lbltitulo.setText("Eliminar producto");
+        txtID.setEditable(true);
+        txtnombre.setEditable(false);
+        txttipo.setEditable(false);
+        txtcompra.setEditable(false);
+        txtventa.setEditable(false);
+        txtstock.setEditable(false);
+        btnbuscar.setVisible(true);
+    }
+    
+    void Folio(){
+    int numero = (int) (Math.random() * 999999999) + 1;
+    folio = String.valueOf(numero);
+    //JOptionPane.showMessageDialog(null, folio);
+}
+    
+    void Nueva(){
+        Folio();
+        try{
+            conn = Login.getConnection();
+            String sql = "insert into Producto(ID_Producto,Nombre,Tipo,Valor_venta,Valor_compra,Existencia)"
+                    +"values("+"'"+folio+"','"+txtnombre.getText()+"','"+txttipo.getText()+"',"
+                    +"'"+txtventa.getText()+"',"
+                    +"'"+txtcompra.getText()+"',"
+                    + "'"+txtstock.getText()+"')";
+            sent = conn.createStatement();
+            int n = sent.executeUpdate(sql);
+            if(n>0){
+                JOptionPane.showMessageDialog(null,"Datos guardados");
+                new Menu().setVisible(true);
+                this.setVisible(false);
+            }
+            conn.close();
+        }catch (Exception e){
+            JOptionPane.showMessageDialog(null,e.getMessage());
+        }
+}
+    
+    void Editar(){
+    
+        try{
+            conn = Login.getConnection();
+            String sql = "UPDATE Producto SET Nombre="
+                    +"'"+txtnombre.getText()+"',Tipo="
+                    +"'"+txttipo.getText()+"',Valor_venta="
+                    +"'"+txtventa.getText()+"',Valor_compra="
+                    +"'"+txtcompra.getText()+"',Existencia="
+                    +"'"+txtstock.getText()+"' "+"WHERE ID_producto='"
+                    +txtID.getText()+"'";
+            sent = conn.createStatement();
+            int n = sent.executeUpdate(sql);
+            if(n>0){
+                JOptionPane.showMessageDialog(null,"Datos guardados");
+                new Menu().setVisible(true);
+                this.setVisible(false);
+            }
+            conn.close();
+        }catch (Exception e){
+            JOptionPane.showMessageDialog(null,e.getMessage());
+        }
+}
+    
+    void Eliminar(){
+    try{
+            String sql = "DELETE from Producto WHERE ID_producto='"
+                    +txtID.getText()+"'";
+            conn = Login.getConnection();
+            sent = conn.createStatement();
+            int n = sent.executeUpdate(sql);
+            
+            if(n>0){
+                JOptionPane.showMessageDialog(null,"Producto eliminado correctamente");
+                new Menu().setVisible(true);
+                this.setVisible(false);
+            }
+            conn.close();
+        }catch (Exception e){
+            JOptionPane.showMessageDialog(null,e.getMessage());
+        }
+}
+    
+    void editar(){
+        txtID.setEditable(false);
+        txtnombre.setEditable(true);
+        txttipo.setEditable(true);
+        txtcompra.setEditable(true);
+        txtventa.setEditable(true);
+        txtstock.setEditable(true);
     }
     /**
      * This method is called from within the constructor to initialize the form.
@@ -60,7 +165,7 @@ public class Gestionproductos extends javax.swing.JFrame {
         txtventa = new javax.swing.JTextField();
         jLabel6 = new javax.swing.JLabel();
         txtstock = new javax.swing.JTextField();
-        jLabel7 = new javax.swing.JLabel();
+        lbltitulo = new javax.swing.JLabel();
         jButton1 = new javax.swing.JButton();
         jButton2 = new javax.swing.JButton();
         btnbuscar = new javax.swing.JButton();
@@ -116,7 +221,7 @@ public class Gestionproductos extends javax.swing.JFrame {
             }
         });
 
-        jLabel7.setText("Gestión de productos");
+        lbltitulo.setText("Gestión de productos");
 
         jButton1.setText("Menú Principal");
         jButton1.addActionListener(new java.awt.event.ActionListener() {
@@ -145,7 +250,7 @@ public class Gestionproductos extends javax.swing.JFrame {
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(layout.createSequentialGroup()
                 .addGap(159, 159, 159)
-                .addComponent(jLabel7)
+                .addComponent(lbltitulo)
                 .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
             .addGroup(layout.createSequentialGroup()
                 .addGap(67, 67, 67)
@@ -186,7 +291,7 @@ public class Gestionproductos extends javax.swing.JFrame {
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
                 .addContainerGap()
-                .addComponent(jLabel7)
+                .addComponent(lbltitulo)
                 .addGap(18, 18, 18)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(jLabel1)
@@ -254,20 +359,47 @@ public class Gestionproductos extends javax.swing.JFrame {
     }//GEN-LAST:event_jButton1ActionPerformed
 
     private void btnbuscarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnbuscarActionPerformed
-        // TODO add your handling code here:
-       // System.out.println(txtID.getText());
+        String b = "";
         a = txtID.getText();
-        if(1==1){
-            System.out.println(a);
-        }else{
-            System.out.println(a);
+        String sql = "SELECT Nombre, Tipo, Valor_venta, Valor_compra, Existencia from Producto where ID_producto='"
+                +a+"'";
+        try{
+            Conn=Login.getConnection();
+            sent = Conn.createStatement();
+            ResultSet rs = sent.executeQuery(sql);
+            //rs.next();
+            txtnombre.setText(rs.getString(1));
+            txttipo.setText(rs.getString(2));
+            txtcompra.setText(rs.getString(3));
+            txtventa.setText(rs.getString(4));
+            txtstock.setText(rs.getString(5));
+            b=txtnombre.getText();
+            Conn.close();
+        }catch (Exception e){
+            JOptionPane.showMessageDialog(null,e.getMessage());
         }
-            
+        
+        if(b.equals("")){
+            JOptionPane.showMessageDialog(null, "No existe el ID insertado");
+        }else{
+            editar();
+        }
     }//GEN-LAST:event_btnbuscarActionPerformed
 
     private void jButton2ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton2ActionPerformed
         // TODO add your handling code here:
-        Menu.VCE="0";
+        
+            if(Menu.VCE.equals("1")){
+                Nueva();
+            }if(Menu.VCE.equals("2")){
+                Editar();
+            }if(Menu.VCE.equals("3")){
+            int dialogResult = JOptionPane.showConfirmDialog (null, "¿Está seguro de eliminar este registro?","Alerta",1);
+            if(dialogResult == JOptionPane.YES_OPTION){
+                Eliminar();
+}
+            }
+            Menu.VCE="0";
     }//GEN-LAST:event_jButton2ActionPerformed
 
     /**
@@ -316,7 +448,7 @@ public class Gestionproductos extends javax.swing.JFrame {
     private javax.swing.JLabel jLabel4;
     private javax.swing.JLabel jLabel5;
     private javax.swing.JLabel jLabel6;
-    private javax.swing.JLabel jLabel7;
+    private javax.swing.JLabel lbltitulo;
     private javax.swing.JTextField txtID;
     private javax.swing.JTextField txtcompra;
     private javax.swing.JTextField txtnombre;

@@ -16,10 +16,13 @@ public class Gestionmedicamentos extends javax.swing.JFrame {
     String a="0";
     public Gestionmedicamentos() {
         initComponents();
+        setLocationRelativeTo(null);
         if(Menu.VCE=="1"){
+            lbltitulo.setText("Nuevo medicamento");
             btnbuscar.setVisible(false);
             txtID.setEditable(false);
         }if(Menu.VCE=="2"){
+            lbltitulo.setText("Editar medicamento");
             B_editar();
         }
         
@@ -57,7 +60,7 @@ public class Gestionmedicamentos extends javax.swing.JFrame {
         txtventa = new javax.swing.JTextField();
         jLabel6 = new javax.swing.JLabel();
         txtstock = new javax.swing.JTextField();
-        jLabel7 = new javax.swing.JLabel();
+        lbltitulo = new javax.swing.JLabel();
         jButton1 = new javax.swing.JButton();
         jButton2 = new javax.swing.JButton();
         btnbuscar = new javax.swing.JButton();
@@ -113,7 +116,7 @@ public class Gestionmedicamentos extends javax.swing.JFrame {
             }
         });
 
-        jLabel7.setText("Gestión de medicamentos");
+        lbltitulo.setText("Gestión de medicamentos");
 
         jButton1.setText("Menú Principal");
         jButton1.addActionListener(new java.awt.event.ActionListener() {
@@ -142,7 +145,7 @@ public class Gestionmedicamentos extends javax.swing.JFrame {
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(layout.createSequentialGroup()
                 .addGap(159, 159, 159)
-                .addComponent(jLabel7)
+                .addComponent(lbltitulo)
                 .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
             .addGroup(layout.createSequentialGroup()
                 .addGap(67, 67, 67)
@@ -183,7 +186,7 @@ public class Gestionmedicamentos extends javax.swing.JFrame {
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
                 .addContainerGap()
-                .addComponent(jLabel7)
+                .addComponent(lbltitulo)
                 .addGap(18, 18, 18)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(jLabel1)
@@ -315,7 +318,7 @@ public class Gestionmedicamentos extends javax.swing.JFrame {
     private javax.swing.JLabel jLabel4;
     private javax.swing.JLabel jLabel5;
     private javax.swing.JLabel jLabel6;
-    private javax.swing.JLabel jLabel7;
+    private javax.swing.JLabel lbltitulo;
     private javax.swing.JTextField txtID;
     private javax.swing.JTextField txtcompra;
     private javax.swing.JTextField txtnombre;
