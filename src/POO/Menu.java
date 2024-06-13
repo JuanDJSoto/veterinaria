@@ -17,7 +17,7 @@ import javax.swing.table.DefaultTableModel;
  * @author Juan Soto
  */
 public class Menu extends javax.swing.JFrame {
-public static String VCE="3";
+public static String VCE="0";
 
 DefaultTableModel model;
     Connection conn;
@@ -95,8 +95,8 @@ DefaultTableModel model;
         jTable1 = new javax.swing.JTable();
         jMenuBar1 = new javax.swing.JMenuBar();
         servicios = new javax.swing.JMenu();
-        jMenuItem16 = new javax.swing.JMenuItem();
         jMenuItem17 = new javax.swing.JMenuItem();
+        jMenuItem16 = new javax.swing.JMenuItem();
         menuinventario = new javax.swing.JMenu();
         menuproductos = new javax.swing.JMenu();
         itemnuevoproducto = new javax.swing.JMenuItem();
@@ -108,6 +108,10 @@ DefaultTableModel model;
         itemeditarmedicamento = new javax.swing.JMenuItem();
         itemeliminarmedicamento = new javax.swing.JMenuItem();
         itemexistenciamedicamento = new javax.swing.JMenuItem();
+        jMenu2 = new javax.swing.JMenu();
+        jMenuItem1 = new javax.swing.JMenuItem();
+        jMenuItem2 = new javax.swing.JMenuItem();
+        jMenuItem3 = new javax.swing.JMenuItem();
         clientes = new javax.swing.JMenu();
         itemnuevocliente = new javax.swing.JMenuItem();
         jMenuItem22 = new javax.swing.JMenuItem();
@@ -144,13 +148,13 @@ DefaultTableModel model;
         ));
         jScrollPane1.setViewportView(jTable1);
 
-        servicios.setText("Ventas");
-
-        jMenuItem16.setText("Servicios");
-        servicios.add(jMenuItem16);
+        servicios.setText("Pagos");
 
         jMenuItem17.setText("Productos");
         servicios.add(jMenuItem17);
+
+        jMenuItem16.setText("Servicios");
+        servicios.add(jMenuItem16);
 
         jMenuBar1.add(servicios);
 
@@ -198,6 +202,11 @@ DefaultTableModel model;
         menuproductos.add(itemeliminarproducto);
 
         itemexistenciaproducto.setText("Consultar existencia");
+        itemexistenciaproducto.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                itemexistenciaproductoActionPerformed(evt);
+            }
+        });
         menuproductos.add(itemexistenciaproducto);
 
         menuinventario.add(menuproductos);
@@ -221,12 +230,50 @@ DefaultTableModel model;
         menumedicamentos.add(itemeditarmedicamento);
 
         itemeliminarmedicamento.setText("Eliminar medicamento");
+        itemeliminarmedicamento.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                itemeliminarmedicamentoActionPerformed(evt);
+            }
+        });
         menumedicamentos.add(itemeliminarmedicamento);
 
-        itemexistenciamedicamento.setText("Consultar existencias");
+        itemexistenciamedicamento.setText("Consultar existencia");
+        itemexistenciamedicamento.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                itemexistenciamedicamentoActionPerformed(evt);
+            }
+        });
         menumedicamentos.add(itemexistenciamedicamento);
 
         menuinventario.add(menumedicamentos);
+
+        jMenu2.setText("Servicios");
+
+        jMenuItem1.setText("Nuevo servicio");
+        jMenuItem1.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jMenuItem1ActionPerformed(evt);
+            }
+        });
+        jMenu2.add(jMenuItem1);
+
+        jMenuItem2.setText("Editar servicio");
+        jMenuItem2.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jMenuItem2ActionPerformed(evt);
+            }
+        });
+        jMenu2.add(jMenuItem2);
+
+        jMenuItem3.setText("Eliminar servicio");
+        jMenuItem3.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jMenuItem3ActionPerformed(evt);
+            }
+        });
+        jMenu2.add(jMenuItem3);
+
+        menuinventario.add(jMenu2);
 
         jMenuBar1.add(menuinventario);
 
@@ -578,6 +625,48 @@ DefaultTableModel model;
         this.setVisible(false);
     }//GEN-LAST:event_itemeliminarproductoActionPerformed
 
+    private void itemeliminarmedicamentoActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_itemeliminarmedicamentoActionPerformed
+        // TODO add your handling code here:
+        VCE="3";
+        new Gestionmedicamentos().setVisible(true);
+        this.setVisible(false);
+    }//GEN-LAST:event_itemeliminarmedicamentoActionPerformed
+
+    private void itemexistenciaproductoActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_itemexistenciaproductoActionPerformed
+        // TODO add your handling code here:
+        VCE="P";
+        new Existencias().setVisible(true);
+        this.setVisible(false);
+    }//GEN-LAST:event_itemexistenciaproductoActionPerformed
+
+    private void itemexistenciamedicamentoActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_itemexistenciamedicamentoActionPerformed
+        // TODO add your handling code here:
+        VCE="M";
+        new Existencias().setVisible(true);
+        this.setVisible(false);
+    }//GEN-LAST:event_itemexistenciamedicamentoActionPerformed
+
+    private void jMenuItem2ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jMenuItem2ActionPerformed
+        // TODO add your handling code here:
+        VCE="2";
+        new Gestionservicios().setVisible(true);
+        this.setVisible(false);
+    }//GEN-LAST:event_jMenuItem2ActionPerformed
+
+    private void jMenuItem1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jMenuItem1ActionPerformed
+        // TODO add your handling code here:
+        VCE="1";
+        new Gestionservicios().setVisible(true);
+        this.setVisible(false);
+    }//GEN-LAST:event_jMenuItem1ActionPerformed
+
+    private void jMenuItem3ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jMenuItem3ActionPerformed
+        // TODO add your handling code here:
+        VCE="3";
+        new Gestionservicios().setVisible(true);
+        this.setVisible(false);
+    }//GEN-LAST:event_jMenuItem3ActionPerformed
+
     /**
      * @param args the command line arguments
      */
@@ -638,10 +727,14 @@ DefaultTableModel model;
     private javax.swing.JMenuItem itemnuevoproducto;
     private javax.swing.JMenuItem itemnuevousuario;
     private javax.swing.JMenu jMenu1;
+    private javax.swing.JMenu jMenu2;
     private javax.swing.JMenuBar jMenuBar1;
+    private javax.swing.JMenuItem jMenuItem1;
     private javax.swing.JMenuItem jMenuItem16;
     private javax.swing.JMenuItem jMenuItem17;
+    private javax.swing.JMenuItem jMenuItem2;
     private javax.swing.JMenuItem jMenuItem22;
+    private javax.swing.JMenuItem jMenuItem3;
     private javax.swing.JScrollPane jScrollPane1;
     private javax.swing.JTable jTable1;
     private javax.swing.JMenu menucitas;

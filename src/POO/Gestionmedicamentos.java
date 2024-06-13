@@ -3,34 +3,45 @@
  * Click nbfs://nbhost/SystemFileSystem/Templates/GUIForms/JFrame.java to edit this template
  */
 package POO;
-
+import java.awt.Color;
+import java.sql.Connection;
+import java.sql.ResultSet;
+import java.sql.Statement;
+import javax.swing.JOptionPane;
 /**
  *
  * @author Juan Soto
  */
 public class Gestionmedicamentos extends javax.swing.JFrame {
+    String folio="";
+    Connection conn;
+    Statement sent;
     /**
      * Creates new form Gestionprodutos
      */
-    int ID=0;
+    
     String a="0";
     public Gestionmedicamentos() {
         initComponents();
         setLocationRelativeTo(null);
         if(Menu.VCE=="1"){
-            lbltitulo.setText("Nuevo medicamento");
-            btnbuscar.setVisible(false);
-            txtID.setEditable(false);
+            B_Nuevo();
         }if(Menu.VCE=="2"){
-            lbltitulo.setText("Editar medicamento");
-            B_editar();
+            B_Editar();
+        }if(Menu.VCE=="3"){
+            B_Eliminar();
         }
-        
     }
-    public void Nuevo(){
-        
+    void B_Nuevo(){
+        lbltitulo.setText("Nuevo medicamento");
+        btnbuscar.setVisible(false);
+        txtID.setEditable(false);
+        //PRUEBA DE CAMBIO DE COLOR PARA CAMPOS BLOQUEADOS
+        txtID.setBackground(Color.BLACK);
     }
-    public void B_editar(){
+    
+    void B_Editar(){
+        lbltitulo.setText("Editar producto");
         txtID.setEditable(true);
         txtnombre.setEditable(false);
         txttipo.setEditable(false);
@@ -38,6 +49,97 @@ public class Gestionmedicamentos extends javax.swing.JFrame {
         txtventa.setEditable(false);
         txtstock.setEditable(false);
         btnbuscar.setVisible(true);
+    }
+    
+    void B_Eliminar(){
+        lbltitulo.setText("Eliminar producto");
+        txtID.setEditable(true);
+        txtnombre.setEditable(false);
+        txttipo.setEditable(false);
+        txtcompra.setEditable(false);
+        txtventa.setEditable(false);
+        txtstock.setEditable(false);
+        btnbuscar.setVisible(true);
+    }
+    
+    void Folio(){
+    int numero = (int) (Math.random() * 999999999) + 1;
+    folio = String.valueOf(numero);
+    //JOptionPane.showMessageDialog(null, folio);
+}
+    
+    void Nueva(){
+        Folio();
+        try{
+            conn = Login.getConnection();
+            String sql = "insert into Medicamentos(ID_medicamento,Nombre,Tipo,Valor_venta,Valor_compra,Existencia)"
+                    +"values("+"'"+folio+"','"+txtnombre.getText()+"','"+txttipo.getText()+"',"
+                    +"'"+txtventa.getText()+"',"
+                    +"'"+txtcompra.getText()+"',"
+                    + "'"+txtstock.getText()+"')";
+            sent = conn.createStatement();
+            int n = sent.executeUpdate(sql);
+            if(n>0){
+                JOptionPane.showMessageDialog(null,"Datos guardados");
+                new Menu().setVisible(true);
+                this.setVisible(false);
+            }
+            conn.close();
+        }catch (Exception e){
+            JOptionPane.showMessageDialog(null,e.getMessage());
+        }
+}
+    
+    void Editar(){
+    
+        try{
+            conn = Login.getConnection();
+            String sql = "UPDATE Medicamentos SET Nombre="
+                    +"'"+txtnombre.getText()+"',Tipo="
+                    +"'"+txttipo.getText()+"',Valor_venta="
+                    +"'"+txtventa.getText()+"',Valor_compra="
+                    +"'"+txtcompra.getText()+"',Existencia="
+                    +"'"+txtstock.getText()+"' "+"WHERE ID_medicamento='"
+                    +txtID.getText()+"'";
+            sent = conn.createStatement();
+            int n = sent.executeUpdate(sql);
+            if(n>0){
+                JOptionPane.showMessageDialog(null,"Datos guardados");
+                new Menu().setVisible(true);
+                this.setVisible(false);
+            }
+            conn.close();
+        }catch (Exception e){
+            JOptionPane.showMessageDialog(null,e.getMessage());
+        }
+}
+    
+    void Eliminar(){
+    try{
+            String sql = "DELETE from Medicamentos WHERE ID_medicamento='"
+                    +txtID.getText()+"'";
+            conn = Login.getConnection();
+            sent = conn.createStatement();
+            int n = sent.executeUpdate(sql);
+            
+            if(n>0){
+                JOptionPane.showMessageDialog(null,"Producto eliminado correctamente");
+                new Menu().setVisible(true);
+                this.setVisible(false);
+            }
+            conn.close();
+        }catch (Exception e){
+            JOptionPane.showMessageDialog(null,e.getMessage());
+        }
+}
+    
+    void editar(){
+        txtID.setEditable(false);
+        txtnombre.setEditable(true);
+        txttipo.setEditable(true);
+        txtcompra.setEditable(true);
+        txtventa.setEditable(true);
+        txtstock.setEditable(true);
     }
     /**
      * This method is called from within the constructor to initialize the form.
@@ -61,8 +163,8 @@ public class Gestionmedicamentos extends javax.swing.JFrame {
         jLabel6 = new javax.swing.JLabel();
         txtstock = new javax.swing.JTextField();
         lbltitulo = new javax.swing.JLabel();
-        jButton1 = new javax.swing.JButton();
-        jButton2 = new javax.swing.JButton();
+        btnmenu = new javax.swing.JButton();
+        btnfinalizar = new javax.swing.JButton();
         btnbuscar = new javax.swing.JButton();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
@@ -118,17 +220,17 @@ public class Gestionmedicamentos extends javax.swing.JFrame {
 
         lbltitulo.setText("Gestión de medicamentos");
 
-        jButton1.setText("Menú Principal");
-        jButton1.addActionListener(new java.awt.event.ActionListener() {
+        btnmenu.setText("Menú Principal");
+        btnmenu.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                jButton1ActionPerformed(evt);
+                btnmenuActionPerformed(evt);
             }
         });
 
-        jButton2.setText("Finalizar");
-        jButton2.addActionListener(new java.awt.event.ActionListener() {
+        btnfinalizar.setText("Finalizar");
+        btnfinalizar.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                jButton2ActionPerformed(evt);
+                btnfinalizarActionPerformed(evt);
             }
         });
 
@@ -177,9 +279,9 @@ public class Gestionmedicamentos extends javax.swing.JFrame {
                 .addGap(12, 12, 12))
             .addGroup(layout.createSequentialGroup()
                 .addGap(44, 44, 44)
-                .addComponent(jButton2)
+                .addComponent(btnfinalizar)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                .addComponent(jButton1)
+                .addComponent(btnmenu)
                 .addGap(43, 43, 43))
         );
         layout.setVerticalGroup(
@@ -214,8 +316,8 @@ public class Gestionmedicamentos extends javax.swing.JFrame {
                     .addComponent(txtstock, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 53, Short.MAX_VALUE)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(jButton1)
-                    .addComponent(jButton2))
+                    .addComponent(btnmenu)
+                    .addComponent(btnfinalizar))
                 .addGap(34, 34, 34))
         );
 
@@ -246,29 +348,56 @@ public class Gestionmedicamentos extends javax.swing.JFrame {
         // TODO add your handling code here:
     }//GEN-LAST:event_txtstockActionPerformed
 
-    private void jButton1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton1ActionPerformed
+    private void btnmenuActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnmenuActionPerformed
         // TODO add your handling code here:
         Menu.VCE="0";
         new Menu().setVisible(true);
         this.setVisible(false);
-    }//GEN-LAST:event_jButton1ActionPerformed
+    }//GEN-LAST:event_btnmenuActionPerformed
 
     private void btnbuscarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnbuscarActionPerformed
         // TODO add your handling code here:
-       // System.out.println(txtID.getText());
+        String b = "";
         a = txtID.getText();
-        if(1==1){
-            System.out.println(a);
-        }else{
-            System.out.println(a);
+        String sql = "SELECT Nombre, Tipo, Valor_venta, Valor_compra, Existencia from Medicamentos where ID_medicamento='"
+                +a+"'";
+        try{
+            conn=Login.getConnection();
+            sent = conn.createStatement();
+            ResultSet rs = sent.executeQuery(sql);
+            //rs.next();
+            txtnombre.setText(rs.getString(1));
+            txttipo.setText(rs.getString(2));
+            txtcompra.setText(rs.getString(3));
+            txtventa.setText(rs.getString(4));
+            txtstock.setText(rs.getString(5));
+            b=txtnombre.getText();
+            conn.close();
+        }catch (Exception e){
+            JOptionPane.showMessageDialog(null,e.getMessage());
         }
-            
+        
+        if(b.equals("")){
+            JOptionPane.showMessageDialog(null, "No existe el ID insertado");
+        }else{
+            editar();
+        }
     }//GEN-LAST:event_btnbuscarActionPerformed
 
-    private void jButton2ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton2ActionPerformed
+    private void btnfinalizarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnfinalizarActionPerformed
         // TODO add your handling code here:}
+        if(Menu.VCE.equals("1")){
+                Nueva();
+            }if(Menu.VCE.equals("2")){
+                Editar();
+            }if(Menu.VCE.equals("3")){
+            int dialogResult = JOptionPane.showConfirmDialog (null, "¿Está seguro de eliminar este registro?","Alerta",1);
+            if(dialogResult == JOptionPane.YES_OPTION){
+                Eliminar();
+}
+            }
         Menu.VCE="0";
-    }//GEN-LAST:event_jButton2ActionPerformed
+    }//GEN-LAST:event_btnfinalizarActionPerformed
 
     /**
      * @param args the command line arguments
@@ -310,8 +439,8 @@ public class Gestionmedicamentos extends javax.swing.JFrame {
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton btnbuscar;
-    private javax.swing.JButton jButton1;
-    private javax.swing.JButton jButton2;
+    private javax.swing.JButton btnfinalizar;
+    private javax.swing.JButton btnmenu;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel2;
     private javax.swing.JLabel jLabel3;
