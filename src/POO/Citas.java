@@ -34,6 +34,9 @@ int Ncitas=0;
         //cmbservicio.addItem("xd");
         Llenar();
         Limpiar();
+        if(Menu.Nivel.equals("0")){
+            btnEliminar.setVisible(false);
+        }
     }
 
 void Llenarcombo(){
