@@ -3,20 +3,201 @@
  * Click nbfs://nbhost/SystemFileSystem/Templates/GUIForms/JFrame.java to edit this template
  */
 package POO;
-
+import java.sql.Connection;
+import java.sql.ResultSet;
+import java.sql.SQLException;
+import java.sql.Statement;
+import javax.swing.JOptionPane;
+import javax.swing.table.DefaultTableModel;
 /**
  *
  * @author gordi
  */
 public class GestionServicio extends javax.swing.JFrame {
-
+Connection conn;
+Statement sent;
+DefaultTableModel model;
+String folio;
+String producto="";
+String medicamento="";
     /**
      * Creates new form GestionServicio
      */
     public GestionServicio() {
         initComponents();
+        Llenarproducto();
+        Llenarmedicamento();
+        Llenar();
+        setLocationRelativeTo(null);
+        
+        cmbproducto.setEnabled(false);
+        cmbmedicamento.setEnabled(false);
+        txtID.setText("");
+        if(Menu.Nivel.equals("0")){
+            btnEliminar.setVisible(false);
+        }
     }
 
+    void Llenarproducto(){
+        try{
+            conn=Login.getConnection();
+            String sql ="Select Nombre from Producto";
+            sent = conn.createStatement();
+            
+            ResultSet rs = sent.executeQuery(sql);
+            while(rs.next()){
+                cmbproducto.addItem(rs.getString(1));
+            }
+            conn.close();
+        }catch (Exception e){
+            e.printStackTrace();
+        }
+    }
+    
+    void Llenarmedicamento(){
+        try{
+            conn=Login.getConnection();
+            String sql ="Select Nombre from medicamentos";
+            sent = conn.createStatement();
+            
+            ResultSet rs = sent.executeQuery(sql);
+            while(rs.next()){
+                cmbmedicamento.addItem(rs.getString(1));
+               
+            }
+            conn.close();
+        }catch (Exception e){
+            e.printStackTrace();
+        }
+    }
+    
+    void GS_producto(){
+        if(chkproducto.isSelected()){
+            producto=cmbproducto.getSelectedItem().toString();
+        }else{
+            producto="no";
+        }
+    }
+    
+    void GS_medicamento(){
+        if(chkmedicamento.isSelected()){
+            medicamento=cmbmedicamento.getSelectedItem().toString();
+        }else{
+            medicamento="no";
+        }
+    }
+    
+    void Folio(){
+    int numero = (int) (Math.random() * 999999999) + 1;
+    folio = String.valueOf(numero);
+    //JOptionPane.showMessageDialog(null, folio);
+}
+    
+    void Nueva(){
+        Folio();
+        GS_producto();
+        GS_medicamento();
+        try{
+            conn = Login.getConnection();
+            String sql = "insert into Servicio(ID_servicio,Nombre,Productos,Medicamento,Valor)"
+                    +"values("+"'"+folio+"','"+txtnombre.getText()+"','"+producto+"',"
+                    +"'"+medicamento+"',"
+                    + "'"+txtvalor.getText()+"')";
+            sent = conn.createStatement();
+            int n = sent.executeUpdate(sql);
+            if(n>0){
+                JOptionPane.showMessageDialog(null,"Datos guardados");
+                
+            }
+            conn.close();
+        }catch (Exception e){
+            JOptionPane.showMessageDialog(null,e.getMessage());
+        }
+        Llenar();
+        Limpiar();
+}
+    
+    void Editar(){
+    GS_producto();
+    GS_medicamento();
+        try{
+            conn = Login.getConnection();
+            String sql = "UPDATE Servicio SET Nombre="
+                    +"'"+txtnombre.getText()+"',Productos="
+                    +"'"+producto+"',Medicamento="
+                    +"'"+medicamento+"',Valor="
+                    +"'"+txtvalor.getText()+"' "+"WHERE ID_servicio='"
+                    +txtID.getText()+"'";
+            sent = conn.createStatement();
+            int n = sent.executeUpdate(sql);
+            if(n>0){
+                JOptionPane.showMessageDialog(null,"Datos guardados");
+                
+            }
+            conn.close();
+        }catch (Exception e){
+            JOptionPane.showMessageDialog(null,e.getMessage());
+        }
+        Llenar();
+        Limpiar();
+}
+    
+    void Eliminar(){
+    try{
+            String sql = "DELETE from Servicio WHERE ID_servicio='"
+                    +txtID.getText()+"'";
+            conn = Login.getConnection();
+            sent = conn.createStatement();
+            int n = sent.executeUpdate(sql);
+            
+            if(n>0){
+                JOptionPane.showMessageDialog(null,"Servicio eliminado correctamente");
+                
+            }
+            conn.close();
+        }catch (Exception e){
+            JOptionPane.showMessageDialog(null,e.getMessage());
+        }
+    Llenar();
+    Limpiar();
+}
+    
+    void Llenar(){
+        try {
+            conn = Login.getConnection();
+            String[] titulos ={"ID","Nombre","Productos","Medicamento","Valor"};
+            String sql = "Select * from servicio";
+            model = new DefaultTableModel(null, titulos);
+            sent = conn.createStatement();
+            ResultSet rs = sent.executeQuery(sql);
+            String[] fila = new String[5];
+            while (rs.next()){
+                fila[0]=rs.getString("ID_servicio");
+                fila[1]=rs.getString("Nombre");
+                fila[2]=rs.getString("Productos");
+                fila[3]=rs.getString("Medicamento");
+                fila[4]=rs.getString("Valor");
+                model.addRow(fila);
+            }
+            tblDB.setModel(model);
+            conn.close();
+        } catch (Exception e){
+            e.printStackTrace();
+        }
+        
+    }
+
+    void Limpiar(){
+    txtvalor.setText("");
+    txtID.setText("");
+    txtnombre.setText("");
+    chkproducto.setSelected(false);
+    chkmedicamento.setSelected(false);
+    cmbproducto.setSelectedItem(false);
+    cmbmedicamento.setSelectedItem(false);
+    cmbproducto.setEnabled(false);
+    cmbmedicamento.setEnabled(false);
+}
     /**
      * This method is called from within the constructor to initialize the form.
      * WARNING: Do NOT modify this code. The content of this method is always
@@ -27,18 +208,16 @@ public class GestionServicio extends javax.swing.JFrame {
     private void initComponents() {
 
         btnEliminar = new javax.swing.JButton();
-        txtApPaterno = new javax.swing.JTextField();
         btnAgregar = new javax.swing.JButton();
         btnVolver = new javax.swing.JButton();
         lblTitulo = new javax.swing.JLabel();
         jScrollPane1 = new javax.swing.JScrollPane();
-        tblBaseDeDatos = new javax.swing.JTable();
+        tblDB = new javax.swing.JTable();
         jLabel1 = new javax.swing.JLabel();
-        lblid = new javax.swing.JLabel();
+        txtID = new javax.swing.JLabel();
         jLabel2 = new javax.swing.JLabel();
-        txtNombre = new javax.swing.JTextField();
+        txtnombre = new javax.swing.JTextField();
         btnModificar = new javax.swing.JButton();
-        jLabel3 = new javax.swing.JLabel();
         jLabel4 = new javax.swing.JLabel();
         chkproducto = new javax.swing.JCheckBox();
         cmbproducto = new javax.swing.JComboBox<>();
@@ -50,18 +229,31 @@ public class GestionServicio extends javax.swing.JFrame {
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
 
         btnEliminar.setText("Eliminar");
-
-        txtApPaterno.setText("jTextField1");
+        btnEliminar.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnEliminarActionPerformed(evt);
+            }
+        });
 
         btnAgregar.setText("Agregar");
+        btnAgregar.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnAgregarActionPerformed(evt);
+            }
+        });
 
         btnVolver.setText("Volver al Menu");
+        btnVolver.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnVolverActionPerformed(evt);
+            }
+        });
 
         lblTitulo.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
         lblTitulo.setText("Gestion de Servicios");
         lblTitulo.setVerticalAlignment(javax.swing.SwingConstants.TOP);
 
-        tblBaseDeDatos.setModel(new javax.swing.table.DefaultTableModel(
+        tblDB.setModel(new javax.swing.table.DefaultTableModel(
             new Object [][] {
                 {null, null, null, null},
                 {null, null, null, null},
@@ -72,19 +264,25 @@ public class GestionServicio extends javax.swing.JFrame {
                 "Title 1", "Title 2", "Title 3", "Title 4"
             }
         ));
-        jScrollPane1.setViewportView(tblBaseDeDatos);
+        tblDB.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                tblDBMouseClicked(evt);
+            }
+        });
+        jScrollPane1.setViewportView(tblDB);
 
         jLabel1.setText("ID:");
 
-        lblid.setText("labelID");
+        txtID.setText("labelID");
 
         jLabel2.setText("Nombre:");
 
-        txtNombre.setText("jTextField1");
-
         btnModificar.setText("Modificar");
-
-        jLabel3.setText("Apellido Paterno:");
+        btnModificar.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnModificarActionPerformed(evt);
+            }
+        });
 
         jLabel4.setText("¿Requiere de algún producto o medicamento?");
 
@@ -95,10 +293,22 @@ public class GestionServicio extends javax.swing.JFrame {
             }
         });
 
+        cmbproducto.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                cmbproductoActionPerformed(evt);
+            }
+        });
+
         chkmedicamento.setText("Medicamento");
         chkmedicamento.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 chkmedicamentoActionPerformed(evt);
+            }
+        });
+
+        cmbmedicamento.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                cmbmedicamentoActionPerformed(evt);
             }
         });
 
@@ -117,36 +327,32 @@ public class GestionServicio extends javax.swing.JFrame {
                                 .addComponent(lblTitulo))
                             .addGroup(layout.createSequentialGroup()
                                 .addGap(12, 12, 12)
-                                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING, false)
-                                    .addGroup(javax.swing.GroupLayout.Alignment.LEADING, layout.createSequentialGroup()
-                                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
-                                            .addComponent(jLabel4)
-                                            .addGroup(layout.createSequentialGroup()
-                                                .addComponent(jLabel1)
-                                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                                                .addComponent(lblid)
-                                                .addGap(75, 75, 75)
-                                                .addComponent(jLabel2, javax.swing.GroupLayout.PREFERRED_SIZE, 60, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                                                .addComponent(txtNombre, javax.swing.GroupLayout.PREFERRED_SIZE, 178, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                                .addGap(18, 18, 18)
-                                                .addComponent(jLabel3)))
-                                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                                        .addComponent(txtApPaterno, javax.swing.GroupLayout.DEFAULT_SIZE, 232, Short.MAX_VALUE))
+                                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
+                                    .addGroup(javax.swing.GroupLayout.Alignment.LEADING, layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
+                                        .addComponent(jLabel4)
+                                        .addGroup(layout.createSequentialGroup()
+                                            .addComponent(jLabel1)
+                                            .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                                            .addComponent(txtID)
+                                            .addGap(75, 75, 75)
+                                            .addComponent(jLabel2, javax.swing.GroupLayout.PREFERRED_SIZE, 60, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                            .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                                            .addComponent(txtnombre, javax.swing.GroupLayout.PREFERRED_SIZE, 178, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                            .addGap(109, 109, 109)))
                                     .addGroup(javax.swing.GroupLayout.Alignment.LEADING, layout.createSequentialGroup()
                                         .addComponent(btnAgregar, javax.swing.GroupLayout.PREFERRED_SIZE, 120, javax.swing.GroupLayout.PREFERRED_SIZE)
                                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                                         .addComponent(btnModificar, javax.swing.GroupLayout.PREFERRED_SIZE, 120, javax.swing.GroupLayout.PREFERRED_SIZE)
                                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                                         .addComponent(btnEliminar, javax.swing.GroupLayout.PREFERRED_SIZE, 120, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                                        .addGap(194, 194, 194)
                                         .addComponent(btnVolver, javax.swing.GroupLayout.PREFERRED_SIZE, 162, javax.swing.GroupLayout.PREFERRED_SIZE))))
                             .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
                                 .addGap(65, 65, 65)
                                 .addComponent(chkproducto)
                                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                                 .addComponent(cmbproducto, javax.swing.GroupLayout.PREFERRED_SIZE, 190, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 78, Short.MAX_VALUE)
+                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                                 .addComponent(chkmedicamento)
                                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                                 .addComponent(cmbmedicamento, javax.swing.GroupLayout.PREFERRED_SIZE, 190, javax.swing.GroupLayout.PREFERRED_SIZE)
@@ -172,11 +378,9 @@ public class GestionServicio extends javax.swing.JFrame {
                 .addGap(18, 18, 18)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(jLabel1)
-                    .addComponent(lblid)
+                    .addComponent(txtID)
                     .addComponent(jLabel2)
-                    .addComponent(txtNombre, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(jLabel3)
-                    .addComponent(txtApPaterno, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addComponent(txtnombre, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                 .addComponent(jLabel4)
                 .addGap(6, 6, 6)
@@ -218,6 +422,90 @@ public class GestionServicio extends javax.swing.JFrame {
             cmbmedicamento.setEnabled(false);
         }
     }//GEN-LAST:event_chkmedicamentoActionPerformed
+
+    private void cmbproductoActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_cmbproductoActionPerformed
+        // TODO add your handling code here:
+        if(chkproducto.isSelected()){
+            cmbproducto.setEnabled(true);
+        }else{
+            cmbproducto.setEnabled(false);
+        }
+    }//GEN-LAST:event_cmbproductoActionPerformed
+
+    private void cmbmedicamentoActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_cmbmedicamentoActionPerformed
+        // TODO add your handling code here:
+        if(chkmedicamento.isSelected()){
+            cmbmedicamento.setEnabled(true);
+        }else{
+            cmbmedicamento.setEnabled(false);
+        }
+    }//GEN-LAST:event_cmbmedicamentoActionPerformed
+
+    private void btnVolverActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnVolverActionPerformed
+        // TODO add your handling code here:
+        new Menu().setVisible(true);
+        this.setVisible(false);
+    }//GEN-LAST:event_btnVolverActionPerformed
+
+    private void tblDBMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_tblDBMouseClicked
+        // TODO add your handling code here:
+        Limpiar();
+        if (evt.getButton()==1){
+            int fila = tblDB.getSelectedRow();
+            try{
+                conn = Login.getConnection();
+            //Habilitar();
+            String nsql = "Select * from servicio where ID_servicio = '" + tblDB.getValueAt(fila, 0)+"'";
+            sent = conn.createStatement();
+            ResultSet rs = sent.executeQuery(nsql);
+            
+            rs.next();
+            if( !"".equals(rs.getString("ID_servicio"))){
+            txtID.setText(rs.getString("ID_servicio"));
+            txtnombre.setText(rs.getString("Nombre"));
+            producto=rs.getString("Productos");
+                medicamento=rs.getString("Medicamento");
+            txtvalor.setText(rs.getString("Valor"));
+                if(!"no".equals(producto)){
+                cmbproducto.setEnabled(true);
+                cmbproducto.setSelectedItem("Productos");
+                chkproducto.setSelected(true);
+                cmbproducto.setSelectedItem(producto);
+                }
+                if(!"no".equals(medicamento)){
+                cmbmedicamento.setEnabled(true);
+                cmbmedicamento.setSelectedItem("Medicamento");
+                chkmedicamento.setSelected(true);
+                cmbmedicamento.setSelectedItem(medicamento);
+                }
+                
+            }else{
+                JOptionPane.showMessageDialog(null, "Error no existe");
+            }
+            conn.close();
+        }catch (Exception e){
+            e.printStackTrace();
+        }
+        }
+    }//GEN-LAST:event_tblDBMouseClicked
+
+    private void btnAgregarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnAgregarActionPerformed
+        // TODO add your handling code here:
+        Nueva();
+    }//GEN-LAST:event_btnAgregarActionPerformed
+
+    private void btnModificarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnModificarActionPerformed
+        // TODO add your handling code here:
+        Editar();
+    }//GEN-LAST:event_btnModificarActionPerformed
+
+    private void btnEliminarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnEliminarActionPerformed
+        // TODO add your handling code here:
+        int dialogResult = JOptionPane.showConfirmDialog (null, "¿Está seguro de eliminar el servicio seleccionado?","Alerta",1);
+            if(dialogResult == JOptionPane.YES_OPTION){
+                Eliminar();
+            }
+    }//GEN-LAST:event_btnEliminarActionPerformed
 
     /**
      * @param args the command line arguments
@@ -265,15 +553,13 @@ public class GestionServicio extends javax.swing.JFrame {
     private javax.swing.JComboBox<String> cmbproducto;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel2;
-    private javax.swing.JLabel jLabel3;
     private javax.swing.JLabel jLabel4;
     private javax.swing.JLabel jLabel5;
     private javax.swing.JScrollPane jScrollPane1;
     private javax.swing.JLabel lblTitulo;
-    private javax.swing.JLabel lblid;
-    private javax.swing.JTable tblBaseDeDatos;
-    private javax.swing.JTextField txtApPaterno;
-    private javax.swing.JTextField txtNombre;
+    private javax.swing.JTable tblDB;
+    private javax.swing.JLabel txtID;
+    private javax.swing.JTextField txtnombre;
     private javax.swing.JTextField txtvalor;
     // End of variables declaration//GEN-END:variables
 }

@@ -18,6 +18,7 @@ import javax.swing.table.DefaultTableModel;
  */
 public class Menu extends javax.swing.JFrame {
 public static String VCE="0";
+public static String Nivel="1";
 
 DefaultTableModel model;
     Connection conn;
@@ -27,7 +28,7 @@ DefaultTableModel model;
      */
     public Menu() {
         initComponents();
-        String Nivel="1";
+        
         Llenar();
         
         this.setMinimumSize(new Dimension(750, 200));
@@ -45,13 +46,7 @@ DefaultTableModel model;
         }
         if(Nivel.equals("0")){
             menuusuarios.setVisible(false);
-            itemcancelarcita.setVisible(false);
-            itemeliminarproducto.setVisible(false);
-            itemeliminarmedicamento.setVisible(false);
-            jMenuItem22.setVisible(false);
-            itemeliminarcliente.setVisible(false);
-            itemeditarmascota.setVisible(false);
-            itemeliminarmascota.setVisible(false);
+
             
         }
     }
@@ -98,39 +93,13 @@ DefaultTableModel model;
         jMenuItem17 = new javax.swing.JMenuItem();
         jMenuItem16 = new javax.swing.JMenuItem();
         menuinventario = new javax.swing.JMenu();
-        menuproductos = new javax.swing.JMenu();
-        itemnuevoproducto = new javax.swing.JMenuItem();
-        itemeditarproducto = new javax.swing.JMenuItem();
-        itemeliminarproducto = new javax.swing.JMenuItem();
-        itemexistenciaproducto = new javax.swing.JMenuItem();
-        menumedicamentos = new javax.swing.JMenu();
-        itemnuevomedicamento = new javax.swing.JMenuItem();
-        itemeditarmedicamento = new javax.swing.JMenuItem();
-        itemeliminarmedicamento = new javax.swing.JMenuItem();
-        itemexistenciamedicamento = new javax.swing.JMenuItem();
-        jMenu2 = new javax.swing.JMenu();
-        jMenuItem1 = new javax.swing.JMenuItem();
-        jMenuItem2 = new javax.swing.JMenuItem();
-        jMenuItem3 = new javax.swing.JMenuItem();
+        jMenuItem4 = new javax.swing.JMenuItem();
+        jMenuItem5 = new javax.swing.JMenuItem();
+        jMenuItem6 = new javax.swing.JMenuItem();
         clientes = new javax.swing.JMenu();
-        itemnuevocliente = new javax.swing.JMenuItem();
-        jMenuItem22 = new javax.swing.JMenuItem();
-        itemeliminarcliente = new javax.swing.JMenuItem();
-        itemeditarcliente = new javax.swing.JMenuItem();
         menumascotas = new javax.swing.JMenu();
-        itemnuevamascota = new javax.swing.JMenuItem();
-        itemeditarmascota = new javax.swing.JMenuItem();
-        itemeliminarmascota = new javax.swing.JMenuItem();
-        itembuscarmascota = new javax.swing.JMenuItem();
         menucitas = new javax.swing.JMenu();
-        itemnuevacita = new javax.swing.JMenuItem();
-        itemeditarcita = new javax.swing.JMenuItem();
-        itemcancelarcita = new javax.swing.JMenuItem();
         menuusuarios = new javax.swing.JMenu();
-        itemnuevousuario = new javax.swing.JMenuItem();
-        itemeditarusuario = new javax.swing.JMenuItem();
-        itemeliminarusuario = new javax.swing.JMenuItem();
-        itembuscarusuario = new javax.swing.JMenuItem();
         jMenu1 = new javax.swing.JMenu();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
@@ -165,115 +134,29 @@ DefaultTableModel model;
             }
         });
 
-        menuproductos.setText("Productos");
-
-        itemnuevoproducto.setText("Nuevo producto");
-        itemnuevoproducto.addMouseListener(new java.awt.event.MouseAdapter() {
-            public void mouseClicked(java.awt.event.MouseEvent evt) {
-                itemnuevoproductoMouseClicked(evt);
-            }
-        });
-        itemnuevoproducto.addActionListener(new java.awt.event.ActionListener() {
+        jMenuItem4.setText("Medicamentos");
+        jMenuItem4.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                itemnuevoproductoActionPerformed(evt);
+                jMenuItem4ActionPerformed(evt);
             }
         });
-        menuproductos.add(itemnuevoproducto);
+        menuinventario.add(jMenuItem4);
 
-        itemeditarproducto.setText("Editar producto");
-        itemeditarproducto.addMouseListener(new java.awt.event.MouseAdapter() {
-            public void mouseClicked(java.awt.event.MouseEvent evt) {
-                itemeditarproductoMouseClicked(evt);
-            }
-        });
-        itemeditarproducto.addActionListener(new java.awt.event.ActionListener() {
+        jMenuItem5.setText("Productos");
+        jMenuItem5.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                itemeditarproductoActionPerformed(evt);
+                jMenuItem5ActionPerformed(evt);
             }
         });
-        menuproductos.add(itemeditarproducto);
+        menuinventario.add(jMenuItem5);
 
-        itemeliminarproducto.setText("Eliminar producto");
-        itemeliminarproducto.addActionListener(new java.awt.event.ActionListener() {
+        jMenuItem6.setText("Servicios");
+        jMenuItem6.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                itemeliminarproductoActionPerformed(evt);
+                jMenuItem6ActionPerformed(evt);
             }
         });
-        menuproductos.add(itemeliminarproducto);
-
-        itemexistenciaproducto.setText("Consultar existencia");
-        itemexistenciaproducto.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                itemexistenciaproductoActionPerformed(evt);
-            }
-        });
-        menuproductos.add(itemexistenciaproducto);
-
-        menuinventario.add(menuproductos);
-
-        menumedicamentos.setText("Medicamentos");
-
-        itemnuevomedicamento.setText("Nuevo medicamento");
-        itemnuevomedicamento.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                itemnuevomedicamentoActionPerformed(evt);
-            }
-        });
-        menumedicamentos.add(itemnuevomedicamento);
-
-        itemeditarmedicamento.setText("Editar medicamento");
-        itemeditarmedicamento.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                itemeditarmedicamentoActionPerformed(evt);
-            }
-        });
-        menumedicamentos.add(itemeditarmedicamento);
-
-        itemeliminarmedicamento.setText("Eliminar medicamento");
-        itemeliminarmedicamento.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                itemeliminarmedicamentoActionPerformed(evt);
-            }
-        });
-        menumedicamentos.add(itemeliminarmedicamento);
-
-        itemexistenciamedicamento.setText("Consultar existencia");
-        itemexistenciamedicamento.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                itemexistenciamedicamentoActionPerformed(evt);
-            }
-        });
-        menumedicamentos.add(itemexistenciamedicamento);
-
-        menuinventario.add(menumedicamentos);
-
-        jMenu2.setText("Servicios");
-
-        jMenuItem1.setText("Nuevo servicio");
-        jMenuItem1.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                jMenuItem1ActionPerformed(evt);
-            }
-        });
-        jMenu2.add(jMenuItem1);
-
-        jMenuItem2.setText("Editar servicio");
-        jMenuItem2.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                jMenuItem2ActionPerformed(evt);
-            }
-        });
-        jMenu2.add(jMenuItem2);
-
-        jMenuItem3.setText("Eliminar servicio");
-        jMenuItem3.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                jMenuItem3ActionPerformed(evt);
-            }
-        });
-        jMenu2.add(jMenuItem3);
-
-        menuinventario.add(jMenu2);
+        menuinventario.add(jMenuItem6);
 
         jMenuBar1.add(menuinventario);
 
@@ -288,144 +171,30 @@ DefaultTableModel model;
                 clientesActionPerformed(evt);
             }
         });
-
-        itemnuevocliente.setText("Nuevo cliente");
-        itemnuevocliente.addMouseListener(new java.awt.event.MouseAdapter() {
-            public void mouseClicked(java.awt.event.MouseEvent evt) {
-                itemnuevoclienteMouseClicked(evt);
-            }
-        });
-        itemnuevocliente.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                itemnuevoclienteActionPerformed(evt);
-            }
-        });
-        clientes.add(itemnuevocliente);
-
-        jMenuItem22.setText("Editar cliente");
-        jMenuItem22.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                jMenuItem22ActionPerformed(evt);
-            }
-        });
-        clientes.add(jMenuItem22);
-
-        itemeliminarcliente.setText("Eliminar cliente");
-        itemeliminarcliente.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                itemeliminarclienteActionPerformed(evt);
-            }
-        });
-        clientes.add(itemeliminarcliente);
-
-        itemeditarcliente.setText("Buscar cliente");
-        itemeditarcliente.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                itemeditarclienteActionPerformed(evt);
-            }
-        });
-        clientes.add(itemeditarcliente);
-
         jMenuBar1.add(clientes);
 
         menumascotas.setText("Mascotas");
-
-        itemnuevamascota.setText("Añadir mascota");
-        itemnuevamascota.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                itemnuevamascotaActionPerformed(evt);
+        menumascotas.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                menumascotasMouseClicked(evt);
             }
         });
-        menumascotas.add(itemnuevamascota);
-
-        itemeditarmascota.setText("Editar mascota");
-        itemeditarmascota.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                itemeditarmascotaActionPerformed(evt);
-            }
-        });
-        menumascotas.add(itemeditarmascota);
-
-        itemeliminarmascota.setText("Eliminar mascota");
-        itemeliminarmascota.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                itemeliminarmascotaActionPerformed(evt);
-            }
-        });
-        menumascotas.add(itemeliminarmascota);
-
-        itembuscarmascota.setText("Buscar mascota");
-        itembuscarmascota.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                itembuscarmascotaActionPerformed(evt);
-            }
-        });
-        menumascotas.add(itembuscarmascota);
-
         jMenuBar1.add(menumascotas);
 
         menucitas.setText("Citas");
-
-        itemnuevacita.setText("Nueva cita");
-        itemnuevacita.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                itemnuevacitaActionPerformed(evt);
+        menucitas.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                menucitasMouseClicked(evt);
             }
         });
-        menucitas.add(itemnuevacita);
-
-        itemeditarcita.setText("Editar cita");
-        itemeditarcita.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                itemeditarcitaActionPerformed(evt);
-            }
-        });
-        menucitas.add(itemeditarcita);
-
-        itemcancelarcita.setText("Cancelar cita");
-        itemcancelarcita.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                itemcancelarcitaActionPerformed(evt);
-            }
-        });
-        menucitas.add(itemcancelarcita);
-
         jMenuBar1.add(menucitas);
 
         menuusuarios.setText("Usuarios");
-
-        itemnuevousuario.setText("Añadir usuario");
-        itemnuevousuario.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                itemnuevousuarioActionPerformed(evt);
+        menuusuarios.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                menuusuariosMouseClicked(evt);
             }
         });
-        menuusuarios.add(itemnuevousuario);
-
-        itemeditarusuario.setText("Editar usuario");
-        itemeditarusuario.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                itemeditarusuarioActionPerformed(evt);
-            }
-        });
-        menuusuarios.add(itemeditarusuario);
-
-        itemeliminarusuario.setText("Eliminar usuario");
-        itemeliminarusuario.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                itemeliminarusuarioActionPerformed(evt);
-            }
-        });
-        menuusuarios.add(itemeliminarusuario);
-
-        itembuscarusuario.setText("Buscar usuario");
-        itembuscarusuario.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                itembuscarusuarioActionPerformed(evt);
-            }
-        });
-        menuusuarios.add(itembuscarusuario);
-
         jMenuBar1.add(menuusuarios);
 
         jMenu1.setText("Salir");
@@ -461,211 +230,54 @@ DefaultTableModel model;
     }//GEN-LAST:event_clientesActionPerformed
 
     private void clientesMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_clientesMouseClicked
-
+        new GestionCliente().setVisible(true);
+        this.setVisible(false);
     }//GEN-LAST:event_clientesMouseClicked
-
-    private void itemnuevoclienteMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_itemnuevoclienteMouseClicked
-    }//GEN-LAST:event_itemnuevoclienteMouseClicked
-
-    private void itemnuevoclienteActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_itemnuevoclienteActionPerformed
-        // TODO add your handling code here:
-        VCE="1";
-        new Gestionclientes().setVisible(true);
-        this.setVisible(false);
-    }//GEN-LAST:event_itemnuevoclienteActionPerformed
-
-    private void itemnuevacitaActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_itemnuevacitaActionPerformed
-        // TODO add your handling code here:
-        VCE="1";
-        new Generarcita().setVisible(true);
-        this.setVisible(false);
-    }//GEN-LAST:event_itemnuevacitaActionPerformed
 
     private void jMenu1MouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jMenu1MouseClicked
         // TODO add your handling code here:
         System.exit(0);
     }//GEN-LAST:event_jMenu1MouseClicked
 
+    private void menumascotasMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_menumascotasMouseClicked
+        // TODO add your handling code here:
+        new GestionMascota().setVisible(true);
+        this.setVisible(false);
+    }//GEN-LAST:event_menumascotasMouseClicked
+
     private void menuinventarioMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_menuinventarioMouseClicked
         // TODO add your handling code here:
     }//GEN-LAST:event_menuinventarioMouseClicked
 
-    private void itemnuevoproductoMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_itemnuevoproductoMouseClicked
+    private void jMenuItem4ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jMenuItem4ActionPerformed
         // TODO add your handling code here:
-        
-    }//GEN-LAST:event_itemnuevoproductoMouseClicked
-
-    private void itemeditarproductoMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_itemeditarproductoMouseClicked
-
-    }//GEN-LAST:event_itemeditarproductoMouseClicked
-
-    private void itemnuevoproductoActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_itemnuevoproductoActionPerformed
-        // TODO add your handling code here:
-        VCE="1";
-        new Gestionproductos().setVisible(true);
+        new GestionMedicamento().setVisible(true);
         this.setVisible(false);
-    }//GEN-LAST:event_itemnuevoproductoActionPerformed
+    }//GEN-LAST:event_jMenuItem4ActionPerformed
 
-    private void itemeditarproductoActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_itemeditarproductoActionPerformed
+    private void jMenuItem5ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jMenuItem5ActionPerformed
         // TODO add your handling code here:
-        VCE="2";
-        new Gestionproductos().setVisible(true);
+        new GestionProducto().setVisible(true);
         this.setVisible(false);
-    }//GEN-LAST:event_itemeditarproductoActionPerformed
+    }//GEN-LAST:event_jMenuItem5ActionPerformed
 
-    private void itemnuevomedicamentoActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_itemnuevomedicamentoActionPerformed
+    private void jMenuItem6ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jMenuItem6ActionPerformed
         // TODO add your handling code here:
-        VCE="1";
-        new Gestionmedicamentos().setVisible(true);
+        new GestionServicio().setVisible(true);
         this.setVisible(false);
-    }//GEN-LAST:event_itemnuevomedicamentoActionPerformed
+    }//GEN-LAST:event_jMenuItem6ActionPerformed
 
-    private void itemeditarmedicamentoActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_itemeditarmedicamentoActionPerformed
+    private void menuusuariosMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_menuusuariosMouseClicked
         // TODO add your handling code here:
-        VCE="2";
-        new Gestionmedicamentos().setVisible(true);
+        new GestionUsuario().setVisible(true);
         this.setVisible(false);
-    }//GEN-LAST:event_itemeditarmedicamentoActionPerformed
+    }//GEN-LAST:event_menuusuariosMouseClicked
 
-    private void itemnuevousuarioActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_itemnuevousuarioActionPerformed
+    private void menucitasMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_menucitasMouseClicked
         // TODO add your handling code here:
-        VCE="1";
-        new Gestionusuarios().setVisible(true);
+        new Citas().setVisible(true);
         this.setVisible(false);
-    }//GEN-LAST:event_itemnuevousuarioActionPerformed
-
-    private void itemeditarusuarioActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_itemeditarusuarioActionPerformed
-        // TODO add your handling code here:
-        VCE="2";
-        new Gestionusuarios().setVisible(true);
-        this.setVisible(false);
-    }//GEN-LAST:event_itemeditarusuarioActionPerformed
-
-    private void itemeditarcitaActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_itemeditarcitaActionPerformed
-        // TODO add your handling code here:
-        VCE="2";
-        new Generarcita().setVisible(true);
-        this.setVisible(false);
-    }//GEN-LAST:event_itemeditarcitaActionPerformed
-
-    private void itemcancelarcitaActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_itemcancelarcitaActionPerformed
-        // TODO add your handling code here:
-        VCE="3";
-        new Generarcita().setVisible(true);
-        this.setVisible(false);
-    }//GEN-LAST:event_itemcancelarcitaActionPerformed
-
-    private void itemnuevamascotaActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_itemnuevamascotaActionPerformed
-        // TODO add your handling code here:
-        VCE="1";
-        new Gestionmascotas().setVisible(true);
-        this.setVisible(false);
-    }//GEN-LAST:event_itemnuevamascotaActionPerformed
-
-    private void itemeditarmascotaActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_itemeditarmascotaActionPerformed
-        // TODO add your handling code here:
-        VCE="2";
-        new Gestionmascotas().setVisible(true);
-        this.setVisible(false);
-    }//GEN-LAST:event_itemeditarmascotaActionPerformed
-
-    private void itemeliminarmascotaActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_itemeliminarmascotaActionPerformed
-        // TODO add your handling code here:
-        VCE="3";
-        new Gestionmascotas().setVisible(true);
-        this.setVisible(false);
-    }//GEN-LAST:event_itemeliminarmascotaActionPerformed
-
-    private void itembuscarmascotaActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_itembuscarmascotaActionPerformed
-        // TODO add your handling code here:
-        VCE="4";
-        new Gestionmascotas().setVisible(true);
-        this.setVisible(false);
-    }//GEN-LAST:event_itembuscarmascotaActionPerformed
-
-    private void itembuscarusuarioActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_itembuscarusuarioActionPerformed
-        // TODO add your handling code here:
-        VCE="4";
-        new Gestionusuarios().setVisible(true);
-        this.setVisible(false);
-    }//GEN-LAST:event_itembuscarusuarioActionPerformed
-
-    private void itemeliminarusuarioActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_itemeliminarusuarioActionPerformed
-        // TODO add your handling code here:
-        VCE="3";
-        new Gestionusuarios().setVisible(true);
-        this.setVisible(false);
-    }//GEN-LAST:event_itemeliminarusuarioActionPerformed
-
-    private void jMenuItem22ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jMenuItem22ActionPerformed
-        // TODO add your handling code here:
-        VCE="2";
-        new Gestionclientes().setVisible(true);
-        this.setVisible(false);
-    }//GEN-LAST:event_jMenuItem22ActionPerformed
-
-    private void itemeliminarclienteActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_itemeliminarclienteActionPerformed
-        // TODO add your handling code here:
-        VCE="3";
-        new Gestionclientes().setVisible(true);
-        this.setVisible(false);
-    }//GEN-LAST:event_itemeliminarclienteActionPerformed
-
-    private void itemeditarclienteActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_itemeditarclienteActionPerformed
-        // TODO add your handling code here:
-        VCE="4";
-        new Gestionclientes().setVisible(true);
-        this.setVisible(false);
-    }//GEN-LAST:event_itemeditarclienteActionPerformed
-
-    private void itemeliminarproductoActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_itemeliminarproductoActionPerformed
-        // TODO add your handling code here:
-        VCE="3";
-        new Gestionproductos().setVisible(true);
-        this.setVisible(false);
-    }//GEN-LAST:event_itemeliminarproductoActionPerformed
-
-    private void itemeliminarmedicamentoActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_itemeliminarmedicamentoActionPerformed
-        // TODO add your handling code here:
-        VCE="3";
-        new Gestionmedicamentos().setVisible(true);
-        this.setVisible(false);
-    }//GEN-LAST:event_itemeliminarmedicamentoActionPerformed
-
-    private void itemexistenciaproductoActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_itemexistenciaproductoActionPerformed
-        // TODO add your handling code here:
-        VCE="P";
-        new Existencias().setVisible(true);
-        this.setVisible(false);
-    }//GEN-LAST:event_itemexistenciaproductoActionPerformed
-
-    private void itemexistenciamedicamentoActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_itemexistenciamedicamentoActionPerformed
-        // TODO add your handling code here:
-        VCE="M";
-        new Existencias().setVisible(true);
-        this.setVisible(false);
-    }//GEN-LAST:event_itemexistenciamedicamentoActionPerformed
-
-    private void jMenuItem2ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jMenuItem2ActionPerformed
-        // TODO add your handling code here:
-        VCE="2";
-        new Gestionservicios().setVisible(true);
-        this.setVisible(false);
-    }//GEN-LAST:event_jMenuItem2ActionPerformed
-
-    private void jMenuItem1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jMenuItem1ActionPerformed
-        // TODO add your handling code here:
-        VCE="1";
-        new Gestionservicios().setVisible(true);
-        this.setVisible(false);
-    }//GEN-LAST:event_jMenuItem1ActionPerformed
-
-    private void jMenuItem3ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jMenuItem3ActionPerformed
-        // TODO add your handling code here:
-        VCE="3";
-        new Gestionservicios().setVisible(true);
-        this.setVisible(false);
-    }//GEN-LAST:event_jMenuItem3ActionPerformed
+    }//GEN-LAST:event_menucitasMouseClicked
 
     /**
      * @param args the command line arguments
@@ -704,44 +316,18 @@ DefaultTableModel model;
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JMenu clientes;
-    private javax.swing.JMenuItem itembuscarmascota;
-    private javax.swing.JMenuItem itembuscarusuario;
-    private javax.swing.JMenuItem itemcancelarcita;
-    private javax.swing.JMenuItem itemeditarcita;
-    private javax.swing.JMenuItem itemeditarcliente;
-    private javax.swing.JMenuItem itemeditarmascota;
-    private javax.swing.JMenuItem itemeditarmedicamento;
-    private javax.swing.JMenuItem itemeditarproducto;
-    private javax.swing.JMenuItem itemeditarusuario;
-    private javax.swing.JMenuItem itemeliminarcliente;
-    private javax.swing.JMenuItem itemeliminarmascota;
-    private javax.swing.JMenuItem itemeliminarmedicamento;
-    private javax.swing.JMenuItem itemeliminarproducto;
-    private javax.swing.JMenuItem itemeliminarusuario;
-    private javax.swing.JMenuItem itemexistenciamedicamento;
-    private javax.swing.JMenuItem itemexistenciaproducto;
-    private javax.swing.JMenuItem itemnuevacita;
-    private javax.swing.JMenuItem itemnuevamascota;
-    private javax.swing.JMenuItem itemnuevocliente;
-    private javax.swing.JMenuItem itemnuevomedicamento;
-    private javax.swing.JMenuItem itemnuevoproducto;
-    private javax.swing.JMenuItem itemnuevousuario;
     private javax.swing.JMenu jMenu1;
-    private javax.swing.JMenu jMenu2;
     private javax.swing.JMenuBar jMenuBar1;
-    private javax.swing.JMenuItem jMenuItem1;
     private javax.swing.JMenuItem jMenuItem16;
     private javax.swing.JMenuItem jMenuItem17;
-    private javax.swing.JMenuItem jMenuItem2;
-    private javax.swing.JMenuItem jMenuItem22;
-    private javax.swing.JMenuItem jMenuItem3;
+    private javax.swing.JMenuItem jMenuItem4;
+    private javax.swing.JMenuItem jMenuItem5;
+    private javax.swing.JMenuItem jMenuItem6;
     private javax.swing.JScrollPane jScrollPane1;
     private javax.swing.JTable jTable1;
     private javax.swing.JMenu menucitas;
     private javax.swing.JMenu menuinventario;
     private javax.swing.JMenu menumascotas;
-    private javax.swing.JMenu menumedicamentos;
-    private javax.swing.JMenu menuproductos;
     public javax.swing.JMenu menuusuarios;
     private javax.swing.JMenu servicios;
     // End of variables declaration//GEN-END:variables

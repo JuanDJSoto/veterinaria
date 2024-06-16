@@ -4,19 +4,182 @@
  */
 package POO;
 
+import java.sql.Connection;
+import java.sql.ResultSet;
+import java.sql.SQLException;
+import java.sql.Statement;
+import javax.swing.JOptionPane;
+import javax.swing.table.DefaultTableModel;
+
 /**
  *
  * @author gordi
  */
 public class GestionMascota extends javax.swing.JFrame {
-
+Connection conn;
+Statement sent;
+String folio;
+String VEX="4";
+DefaultTableModel model;
     /**
      * Creates new form GestionMascota
      */
     public GestionMascota() {
         initComponents();
+        if(Menu.Nivel.equals("0")){
+        btnModificar.setVisible(false);
+        btnEliminar.setVisible(false);
+    }
+        txtID.setText("");
+        setLocationRelativeTo(null);
+        Llenar();
     }
 
+void Folio(){
+    int numero = (int) (Math.random() * 999999999) + 1;
+    folio = String.valueOf(numero);
+    //JOptionPane.showMessageDialog(null, folio);
+}
+
+void Nueva(){
+        Folio();
+        try{
+            conn = Login.getConnection();
+            String sql = "insert into Animales (ID_Animal,Nombre,Edad,Tipo,Raza,Dueno,Historial) "
+                    +"values('"+folio+"',"
+                    +"'"+txtnombre.getText()+"',"
+                    +"'"+txtedad.getText()+"',"
+                    +"'"+txttipo.getText()+"',"
+                    +"'"+txtraza.getText()+"',"
+                    +"'"+txtcliente.getText()+"',"
+                    +"'')";
+            sent = conn.createStatement();
+            int n = sent.executeUpdate(sql);
+            if(n>0){
+                JOptionPane.showMessageDialog(null,"Datos guardados");
+                
+            }
+            conn.close();
+        }catch (Exception e){
+            JOptionPane.showMessageDialog(null,e.getMessage());
+        }
+        Llenar();
+        Limpiar();
+}
+
+void Editar(){
+        try{
+            conn = Login.getConnection();
+            String sql = "UPDATE Animales SET Nombre="
+                    +"'"+txtnombre.getText()+"',Edad="
+                    +"'"+txtedad.getText()+"',Tipo="
+                    +"'"+txttipo.getText()+"',Raza="
+                    +"'"+txtraza.getText()+"',Dueno="
+                    +"'"+txtcliente.getText()+"',Historial="
+                    +"''"+"WHERE ID_Animal='"
+                    +txtID.getText()+"'";
+            sent = conn.createStatement();
+            int n = sent.executeUpdate(sql);
+            if(n>0){
+                JOptionPane.showMessageDialog(null,"Datos guardados");
+                
+            }
+            conn.close();
+        }catch (Exception e){
+            JOptionPane.showMessageDialog(null,e.getMessage());
+        }
+        Llenar();
+        Limpiar();
+}
+
+void Eliminar(){
+    int dialogResult = JOptionPane.showConfirmDialog (null, "¿Está seguro de eliminar este registro?","Alerta",1);
+            if(dialogResult == JOptionPane.YES_OPTION){
+                
+    try{
+            String sql = "DELETE from Animales WHERE ID_Animal='"
+                    +txtID.getText()+"'";
+            conn = Login.getConnection();
+            sent = conn.createStatement();
+            int n = sent.executeUpdate(sql);
+            
+            if(n>0){
+                JOptionPane.showMessageDialog(null,"Mascota eliminada correctamente");
+            }
+            conn.close();
+        }catch (Exception e){
+            JOptionPane.showMessageDialog(null,e.getMessage());
+        }
+    Llenar();
+    Limpiar();
+            }
+}
+
+void Llenar(){
+        try {
+            conn = Login.getConnection();
+            String[] titulos ={"ID","Nombre","Edad","Tipo","Raza","Dueño"};
+            String sql = "Select ID_Animal,Nombre,Edad,Tipo,Raza,Dueno from Animales";
+            model = new DefaultTableModel(null, titulos);
+            sent = conn.createStatement();
+            ResultSet rs = sent.executeQuery(sql);
+            String[] fila = new String[6];
+            while (rs.next()){
+                fila[0]=rs.getString("ID_Animal");
+                fila[1]=rs.getString("Nombre");
+                fila[2]=rs.getString("Edad");
+                fila[3]=rs.getString("Tipo");
+                fila[4]=rs.getString("Raza");
+                fila[5]=rs.getString("Dueno");
+                //fila[5]=rs.getString("Historial");
+                
+                model.addRow(fila);
+            }
+            tblDB.setModel(model);
+            conn.close();
+        } catch (Exception e){
+            e.printStackTrace();
+        }
+        
+    }
+
+void Limpiar(){
+    txtcliente.setText("");
+    txtedad.setText("");
+    txtraza.setText("");
+    txttipo.setText("");
+    txtID.setText("");
+    txtnombre.setText("");
+}
+
+void Vexistencia(){
+    
+        try{
+        String sql = "Select Nombre from clientes where Nombre ='"
+                +txtcliente.getText()+"'";
+        conn = Login.getConnection();
+        sent = conn.createStatement();
+            ResultSet rs = sent.executeQuery(sql);
+            String Exi=rs.getString(1);
+            if(Exi!=""){
+                JOptionPane.showMessageDialog(null, "Si existe");
+                VEX="1";
+            }
+            conn.close();
+            } catch (SQLException e){
+            int seleccion = JOptionPane.showOptionDialog( null,"Es necesario registrar al cliente, ¿Desea hacerlo ahora?",
+  "Selector de opciones",JOptionPane.YES_NO_OPTION,
+   JOptionPane.QUESTION_MESSAGE,null,// null para icono por defecto.
+  new Object[] { "Si", "No" },"Si");
+     
+ if (seleccion == 0){
+           new GestionCliente().setVisible(true);
+           this.setVisible(false);
+ }if(seleccion==1){
+ }
+        }
+        
+}
     /**
      * This method is called from within the constructor to initialize the form.
      * WARNING: Do NOT modify this code. The content of this method is always
@@ -32,12 +195,12 @@ public class GestionMascota extends javax.swing.JFrame {
         lblTitulo = new javax.swing.JLabel();
         jLabel5 = new javax.swing.JLabel();
         jScrollPane1 = new javax.swing.JScrollPane();
-        tblBaseDeDatos = new javax.swing.JTable();
-        txtEdad = new javax.swing.JTextField();
+        tblDB = new javax.swing.JTable();
+        txtedad = new javax.swing.JTextField();
         jLabel1 = new javax.swing.JLabel();
-        lblid = new javax.swing.JLabel();
+        txtID = new javax.swing.JLabel();
         jLabel2 = new javax.swing.JLabel();
-        txtNombre = new javax.swing.JTextField();
+        txtnombre = new javax.swing.JTextField();
         btnModificar = new javax.swing.JButton();
         txtraza = new javax.swing.JTextField();
         jLabel6 = new javax.swing.JLabel();
@@ -49,10 +212,25 @@ public class GestionMascota extends javax.swing.JFrame {
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
 
         btnEliminar.setText("Eliminar");
+        btnEliminar.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnEliminarActionPerformed(evt);
+            }
+        });
 
         btnAgregar.setText("Agregar");
+        btnAgregar.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnAgregarActionPerformed(evt);
+            }
+        });
 
         btnVolver.setText("Volver al Menu");
+        btnVolver.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnVolverActionPerformed(evt);
+            }
+        });
 
         lblTitulo.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
         lblTitulo.setText("Gestion de Mascotas");
@@ -60,7 +238,7 @@ public class GestionMascota extends javax.swing.JFrame {
 
         jLabel5.setText("Edad:");
 
-        tblBaseDeDatos.setModel(new javax.swing.table.DefaultTableModel(
+        tblDB.setModel(new javax.swing.table.DefaultTableModel(
             new Object [][] {
                 {null, null, null, null},
                 {null, null, null, null},
@@ -71,19 +249,25 @@ public class GestionMascota extends javax.swing.JFrame {
                 "Title 1", "Title 2", "Title 3", "Title 4"
             }
         ));
-        jScrollPane1.setViewportView(tblBaseDeDatos);
-
-        txtEdad.setText("jTextField1");
+        tblDB.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                tblDBMouseClicked(evt);
+            }
+        });
+        jScrollPane1.setViewportView(tblDB);
 
         jLabel1.setText("ID:");
 
-        lblid.setText("labelID");
+        txtID.setText("labelID");
 
         jLabel2.setText("Nombre(s):");
 
-        txtNombre.setText("jTextField1");
-
         btnModificar.setText("Modificar");
+        btnModificar.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnModificarActionPerformed(evt);
+            }
+        });
 
         jLabel6.setText("Tipo de mascota:");
 
@@ -112,19 +296,19 @@ public class GestionMascota extends javax.swing.JFrame {
                                         .addGap(18, 18, 18)
                                         .addComponent(jLabel5)
                                         .addGap(18, 18, 18)
-                                        .addComponent(txtEdad, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                        .addComponent(txtedad, javax.swing.GroupLayout.PREFERRED_SIZE, 84, javax.swing.GroupLayout.PREFERRED_SIZE)
                                         .addGap(18, 18, 18)
                                         .addComponent(jLabel7)
-                                        .addGap(18, 18, 18)
+                                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                                         .addComponent(txtcliente))
                                     .addGroup(layout.createSequentialGroup()
                                         .addComponent(jLabel1)
                                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                                        .addComponent(lblid)
-                                        .addGap(75, 75, 75)
+                                        .addComponent(txtID, javax.swing.GroupLayout.PREFERRED_SIZE, 99, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                                         .addComponent(jLabel2)
                                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                                        .addComponent(txtNombre, javax.swing.GroupLayout.PREFERRED_SIZE, 178, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                        .addComponent(txtnombre, javax.swing.GroupLayout.PREFERRED_SIZE, 178, javax.swing.GroupLayout.PREFERRED_SIZE)
                                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                                         .addComponent(jLabel6)
                                         .addGap(18, 18, 18)
@@ -151,15 +335,15 @@ public class GestionMascota extends javax.swing.JFrame {
                 .addGap(18, 18, 18)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(jLabel1)
-                    .addComponent(lblid)
+                    .addComponent(txtID)
                     .addComponent(jLabel2)
-                    .addComponent(txtNombre, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(txtnombre, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(txttipo, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(jLabel6))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(jLabel5)
-                    .addComponent(txtEdad, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(txtedad, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(txtraza, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(jLabel8)
                     .addComponent(txtcliente, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
@@ -175,6 +359,60 @@ public class GestionMascota extends javax.swing.JFrame {
 
         pack();
     }// </editor-fold>//GEN-END:initComponents
+
+    private void tblDBMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_tblDBMouseClicked
+        // TODO add your handling code here:
+        if (evt.getButton()==1){
+            int fila = tblDB.getSelectedRow();
+            try{
+                conn = Login.getConnection();
+            //Habilitar();
+            String sql = "Select * from Animales where ID_Animal='" + tblDB.getValueAt(fila, 0)+"'";
+            sent = conn.createStatement();
+            ResultSet rs = sent.executeQuery(sql);
+            if(rs.getString("Nombre")!=""){
+            rs.next();
+            txtID.setText(rs.getString("ID_Animal"));
+            txtnombre.setText(rs.getString("Nombre"));
+            txttipo.setText(rs.getString("Tipo"));
+            txtraza.setText(rs.getString("Raza"));
+            txtedad.setText(rs.getString("Edad"));
+            txtcliente.setText(rs.getString("Dueno"));
+            }else{
+                JOptionPane.showMessageDialog(null, "Error");
+            }
+            conn.close();
+        }catch (Exception e){
+            e.printStackTrace();
+        }
+        }
+    }//GEN-LAST:event_tblDBMouseClicked
+
+    private void btnAgregarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnAgregarActionPerformed
+        // TODO add your handling code here:
+        Vexistencia();
+        if (VEX.equals("1")){
+            Nueva();
+        }else{
+            JOptionPane.showMessageDialog(null, "No se guardaron los datos");
+        }
+    }//GEN-LAST:event_btnAgregarActionPerformed
+
+    private void btnModificarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnModificarActionPerformed
+        // TODO add your handling code here:
+        Editar();
+    }//GEN-LAST:event_btnModificarActionPerformed
+
+    private void btnEliminarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnEliminarActionPerformed
+        // TODO add your handling code here:
+        Eliminar();
+    }//GEN-LAST:event_btnEliminarActionPerformed
+
+    private void btnVolverActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnVolverActionPerformed
+        // TODO add your handling code here:
+        new Menu().setVisible(true);
+        this.setVisible(false);
+    }//GEN-LAST:event_btnVolverActionPerformed
 
     /**
      * @param args the command line arguments
@@ -224,11 +462,11 @@ public class GestionMascota extends javax.swing.JFrame {
     private javax.swing.JLabel jLabel8;
     private javax.swing.JScrollPane jScrollPane1;
     private javax.swing.JLabel lblTitulo;
-    private javax.swing.JLabel lblid;
-    private javax.swing.JTable tblBaseDeDatos;
-    private javax.swing.JTextField txtEdad;
-    private javax.swing.JTextField txtNombre;
+    private javax.swing.JTable tblDB;
+    private javax.swing.JLabel txtID;
     private javax.swing.JTextField txtcliente;
+    private javax.swing.JTextField txtedad;
+    private javax.swing.JTextField txtnombre;
     private javax.swing.JTextField txtraza;
     private javax.swing.JTextField txttipo;
     // End of variables declaration//GEN-END:variables

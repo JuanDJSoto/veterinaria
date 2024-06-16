@@ -242,7 +242,7 @@ void Vexistencia(){
  if (seleccion == 0){
             Menu.VCE="1";
             
-           new Gestionclientes().setVisible(true);
+           new GestionCliente().setVisible(true);
            this.setVisible(false);
  }
         }
