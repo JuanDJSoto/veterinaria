@@ -149,6 +149,15 @@ void Llenar(){
         
     }
 
+void ChecarCampos(){
+    if(txtnombre.getText().equals("") || txtpaterno.getText().equals("") || txtmaterno.getText().equals("") || txtedad.getText().equals("") || txttelefono.getText().equals("") || txtdireccion.getText().equals("") || txtpassword.getText().equals("") && txtID.getText().equals("")){
+        btnAgregar.setEnabled(false);
+    }
+    else{
+        btnAgregar.setEnabled(true);
+    }
+}
+
 void Limpiar(){
     txtID.setText("");
     txtnombre.setText("");
@@ -160,7 +169,22 @@ void Limpiar(){
     txtpassword.setText("");
     jrbusuario.setSelected(true);
     jrbadmin.setSelected(false);
+    btnModificar.setEnabled(false);
+    btnEliminar.setEnabled(false);
+    btnAgregar.setEnabled(false);
 }
+
+public static boolean esNumerico(String valor){     
+    try{
+        if(valor!= null){
+            Integer.parseInt(valor);
+        }
+    }catch(NumberFormatException nfe){
+         return false; 
+    }
+    return false;
+}
+
     /**
      * This method is called from within the constructor to initialize the form.
      * WARNING: Do NOT modify this code. The content of this method is always
@@ -200,13 +224,21 @@ void Limpiar(){
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
 
         btnEliminar.setText("Eliminar");
+        btnEliminar.setEnabled(false);
         btnEliminar.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 btnEliminarActionPerformed(evt);
             }
         });
 
+        txtpaterno.addKeyListener(new java.awt.event.KeyAdapter() {
+            public void keyReleased(java.awt.event.KeyEvent evt) {
+                txtpaternoKeyReleased(evt);
+            }
+        });
+
         btnAgregar.setText("Agregar");
+        btnAgregar.setEnabled(false);
         btnAgregar.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 btnAgregarActionPerformed(evt);
@@ -219,6 +251,12 @@ void Limpiar(){
         btnVolver.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 btnVolverActionPerformed(evt);
+            }
+        });
+
+        txtmaterno.addKeyListener(new java.awt.event.KeyAdapter() {
+            public void keyReleased(java.awt.event.KeyEvent evt) {
+                txtmaternoKeyReleased(evt);
             }
         });
 
@@ -246,17 +284,48 @@ void Limpiar(){
         });
         jScrollPane1.setViewportView(tblDB);
 
+        txtedad.addKeyListener(new java.awt.event.KeyAdapter() {
+            public void keyReleased(java.awt.event.KeyEvent evt) {
+                txtedadKeyReleased(evt);
+            }
+            public void keyTyped(java.awt.event.KeyEvent evt) {
+                txtedadKeyTyped(evt);
+            }
+        });
+
         jLabel6.setText("Numero Telefonico:");
 
         jLabel1.setText("ID:");
 
+        txttelefono.addKeyListener(new java.awt.event.KeyAdapter() {
+            public void keyReleased(java.awt.event.KeyEvent evt) {
+                txttelefonoKeyReleased(evt);
+            }
+            public void keyTyped(java.awt.event.KeyEvent evt) {
+                txttelefonoKeyTyped(evt);
+            }
+        });
+
         txtID.setText("labelID");
+
+        txtdireccion.addKeyListener(new java.awt.event.KeyAdapter() {
+            public void keyReleased(java.awt.event.KeyEvent evt) {
+                txtdireccionKeyReleased(evt);
+            }
+        });
 
         jLabel2.setText("Nombre(s):");
 
         jLabel7.setText("Dirección:");
 
+        txtnombre.addKeyListener(new java.awt.event.KeyAdapter() {
+            public void keyReleased(java.awt.event.KeyEvent evt) {
+                txtnombreKeyReleased(evt);
+            }
+        });
+
         btnModificar.setText("Modificar");
+        btnModificar.setEnabled(false);
         btnModificar.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 btnModificarActionPerformed(evt);
@@ -266,6 +335,12 @@ void Limpiar(){
         jLabel3.setText("Apellido Paterno:");
 
         jLabel9.setText("Contraseña:");
+
+        txtpassword.addKeyListener(new java.awt.event.KeyAdapter() {
+            public void keyReleased(java.awt.event.KeyEvent evt) {
+                txtpasswordKeyReleased(evt);
+            }
+        });
 
         btg1.add(jrbusuario);
         jrbusuario.setText("Usuario");
@@ -415,6 +490,8 @@ void Limpiar(){
         }catch (Exception e){
             e.printStackTrace();
         }
+            btnEliminar.setEnabled(true);
+            btnModificar.setEnabled(true);
         }
     }//GEN-LAST:event_tblDBMouseClicked
 
@@ -442,6 +519,68 @@ void Limpiar(){
         this.setVisible(false);
     }//GEN-LAST:event_btnVolverActionPerformed
 
+    private void txtpasswordKeyReleased(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_txtpasswordKeyReleased
+        // TODO add your handling code here:
+        ChecarCampos();
+    }//GEN-LAST:event_txtpasswordKeyReleased
+
+    private void txtdireccionKeyReleased(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_txtdireccionKeyReleased
+        // TODO add your handling code here:
+        ChecarCampos();
+    }//GEN-LAST:event_txtdireccionKeyReleased
+
+    private void txttelefonoKeyReleased(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_txttelefonoKeyReleased
+        // TODO add your handling code here:
+        ChecarCampos();
+    }//GEN-LAST:event_txttelefonoKeyReleased
+
+    private void txtmaternoKeyReleased(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_txtmaternoKeyReleased
+        // TODO add your handling code here:
+        ChecarCampos();
+    }//GEN-LAST:event_txtmaternoKeyReleased
+
+    private void txtpaternoKeyReleased(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_txtpaternoKeyReleased
+        // TODO add your handling code here:
+        ChecarCampos();
+    }//GEN-LAST:event_txtpaternoKeyReleased
+
+    private void txtnombreKeyReleased(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_txtnombreKeyReleased
+        // TODO add your handling code here:
+        ChecarCampos();
+    }//GEN-LAST:event_txtnombreKeyReleased
+
+    private void txtedadKeyReleased(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_txtedadKeyReleased
+        // TODO add your handling code here:
+        ChecarCampos();
+    }//GEN-LAST:event_txtedadKeyReleased
+
+    private void txtedadKeyTyped(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_txtedadKeyTyped
+        // TODO add your handling code here:
+        int key = evt.getKeyChar();
+        
+        boolean numero = key >= 48 && key <= 57;
+        
+        if(!numero){
+            evt.consume();
+        }
+    }//GEN-LAST:event_txtedadKeyTyped
+
+    private void txttelefonoKeyTyped(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_txttelefonoKeyTyped
+        // TODO add your handling code here:
+        int key = evt.getKeyChar();
+        
+        boolean numero = key >= 48 && key <= 57;
+        
+        if(!numero){
+            evt.consume();
+        }
+        
+        if(txttelefono.getText().trim().length() == 10){
+            evt.consume();
+        }
+    }//GEN-LAST:event_txttelefonoKeyTyped
+
+    
     /**
      * @param args the command line arguments
      */

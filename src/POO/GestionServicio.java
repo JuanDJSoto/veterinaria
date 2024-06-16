@@ -187,6 +187,15 @@ String medicamento="";
         
     }
 
+void ChecarCampos(){
+    if(txtnombre.getText().equals("") || txtvalor.getText().equals("") && txtID.getText().equals("")){
+        btnAgregar.setEnabled(false);
+    }
+    else{
+        btnAgregar.setEnabled(true);
+    }
+}
+
     void Limpiar(){
     txtvalor.setText("");
     txtID.setText("");
@@ -197,6 +206,9 @@ String medicamento="";
     cmbmedicamento.setSelectedItem(false);
     cmbproducto.setEnabled(false);
     cmbmedicamento.setEnabled(false);
+    btnModificar.setEnabled(false);
+    btnEliminar.setEnabled(false);
+    btnAgregar.setEnabled(false);
 }
     /**
      * This method is called from within the constructor to initialize the form.
@@ -229,6 +241,7 @@ String medicamento="";
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
 
         btnEliminar.setText("Eliminar");
+        btnEliminar.setEnabled(false);
         btnEliminar.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 btnEliminarActionPerformed(evt);
@@ -236,6 +249,7 @@ String medicamento="";
         });
 
         btnAgregar.setText("Agregar");
+        btnAgregar.setEnabled(false);
         btnAgregar.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 btnAgregarActionPerformed(evt);
@@ -277,7 +291,14 @@ String medicamento="";
 
         jLabel2.setText("Nombre:");
 
+        txtnombre.addKeyListener(new java.awt.event.KeyAdapter() {
+            public void keyReleased(java.awt.event.KeyEvent evt) {
+                txtnombreKeyReleased(evt);
+            }
+        });
+
         btnModificar.setText("Modificar");
+        btnModificar.setEnabled(false);
         btnModificar.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 btnModificarActionPerformed(evt);
@@ -309,6 +330,15 @@ String medicamento="";
         cmbmedicamento.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 cmbmedicamentoActionPerformed(evt);
+            }
+        });
+
+        txtvalor.addKeyListener(new java.awt.event.KeyAdapter() {
+            public void keyReleased(java.awt.event.KeyEvent evt) {
+                txtvalorKeyReleased(evt);
+            }
+            public void keyTyped(java.awt.event.KeyEvent evt) {
+                txtvalorKeyTyped(evt);
             }
         });
 
@@ -506,6 +536,27 @@ String medicamento="";
                 Eliminar();
             }
     }//GEN-LAST:event_btnEliminarActionPerformed
+
+    private void txtnombreKeyReleased(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_txtnombreKeyReleased
+        // TODO add your handling code here:
+        ChecarCampos();
+    }//GEN-LAST:event_txtnombreKeyReleased
+
+    private void txtvalorKeyReleased(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_txtvalorKeyReleased
+        // TODO add your handling code here:
+        ChecarCampos();
+    }//GEN-LAST:event_txtvalorKeyReleased
+
+    private void txtvalorKeyTyped(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_txtvalorKeyTyped
+        // TODO add your handling code here:
+        int key = evt.getKeyChar();
+        
+        boolean numero = key >= 48 && key <= 57;
+        
+        if(!numero){
+            evt.consume();
+        }
+    }//GEN-LAST:event_txtvalorKeyTyped
 
     /**
      * @param args the command line arguments

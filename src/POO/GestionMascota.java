@@ -143,6 +143,15 @@ void Llenar(){
         
     }
 
+void ChecarCampos(){
+    if(txtnombre.getText().equals("") || txtedad.getText().equals("") || txttipo.getText().equals("") || txtraza.getText().equals("") || txtcliente.getText().equals("") && txtID.getText().equals("")){
+        btnAgregar.setEnabled(false);
+    }
+    else{
+        btnAgregar.setEnabled(true);
+    }
+}
+
 void Limpiar(){
     txtcliente.setText("");
     txtedad.setText("");
@@ -150,6 +159,9 @@ void Limpiar(){
     txttipo.setText("");
     txtID.setText("");
     txtnombre.setText("");
+    btnModificar.setEnabled(false);
+    btnEliminar.setEnabled(false);
+    btnAgregar.setEnabled(false);
 }
 
 void Vexistencia(){
@@ -212,6 +224,7 @@ void Vexistencia(){
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
 
         btnEliminar.setText("Eliminar");
+        btnEliminar.setEnabled(false);
         btnEliminar.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 btnEliminarActionPerformed(evt);
@@ -219,6 +232,7 @@ void Vexistencia(){
         });
 
         btnAgregar.setText("Agregar");
+        btnAgregar.setEnabled(false);
         btnAgregar.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 btnAgregarActionPerformed(evt);
@@ -256,22 +270,56 @@ void Vexistencia(){
         });
         jScrollPane1.setViewportView(tblDB);
 
+        txtedad.addKeyListener(new java.awt.event.KeyAdapter() {
+            public void keyReleased(java.awt.event.KeyEvent evt) {
+                txtedadKeyReleased(evt);
+            }
+            public void keyTyped(java.awt.event.KeyEvent evt) {
+                txtedadKeyTyped(evt);
+            }
+        });
+
         jLabel1.setText("ID:");
 
         txtID.setText("labelID");
 
         jLabel2.setText("Nombre(s):");
 
+        txtnombre.addKeyListener(new java.awt.event.KeyAdapter() {
+            public void keyReleased(java.awt.event.KeyEvent evt) {
+                txtnombreKeyReleased(evt);
+            }
+        });
+
         btnModificar.setText("Modificar");
+        btnModificar.setEnabled(false);
         btnModificar.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 btnModificarActionPerformed(evt);
             }
         });
 
+        txtraza.addKeyListener(new java.awt.event.KeyAdapter() {
+            public void keyReleased(java.awt.event.KeyEvent evt) {
+                txtrazaKeyReleased(evt);
+            }
+        });
+
         jLabel6.setText("Tipo de mascota:");
 
         jLabel7.setText("Dueño:");
+
+        txtcliente.addKeyListener(new java.awt.event.KeyAdapter() {
+            public void keyReleased(java.awt.event.KeyEvent evt) {
+                txtclienteKeyReleased(evt);
+            }
+        });
+
+        txttipo.addKeyListener(new java.awt.event.KeyAdapter() {
+            public void keyReleased(java.awt.event.KeyEvent evt) {
+                txttipoKeyReleased(evt);
+            }
+        });
 
         jLabel8.setText("Raza:");
 
@@ -413,6 +461,42 @@ void Vexistencia(){
         new Menu().setVisible(true);
         this.setVisible(false);
     }//GEN-LAST:event_btnVolverActionPerformed
+
+    private void txtnombreKeyReleased(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_txtnombreKeyReleased
+        // TODO add your handling code here:
+        ChecarCampos();
+    }//GEN-LAST:event_txtnombreKeyReleased
+
+    private void txttipoKeyReleased(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_txttipoKeyReleased
+        // TODO add your handling code here:
+        ChecarCampos();
+    }//GEN-LAST:event_txttipoKeyReleased
+
+    private void txtrazaKeyReleased(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_txtrazaKeyReleased
+        // TODO add your handling code here:
+        ChecarCampos();
+    }//GEN-LAST:event_txtrazaKeyReleased
+
+    private void txtedadKeyReleased(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_txtedadKeyReleased
+        // TODO add your handling code here:
+        ChecarCampos();
+    }//GEN-LAST:event_txtedadKeyReleased
+
+    private void txtclienteKeyReleased(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_txtclienteKeyReleased
+        // TODO add your handling code here:
+        ChecarCampos();
+    }//GEN-LAST:event_txtclienteKeyReleased
+
+    private void txtedadKeyTyped(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_txtedadKeyTyped
+        // TODO add your handling code here:
+        int key = evt.getKeyChar();
+        
+        boolean numero = key >= 48 && key <= 57;
+        
+        if(!numero){
+            evt.consume();
+        }
+    }//GEN-LAST:event_txtedadKeyTyped
 
     /**
      * @param args the command line arguments

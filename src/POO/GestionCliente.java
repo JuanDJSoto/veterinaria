@@ -139,6 +139,15 @@ void Llenar(){
         
     }
 
+void ChecarCampos(){
+    if(txtnombre.getText().equals("") || txtpaterno.getText().equals("") || txtmaterno.getText().equals("") || txtedad.getText().equals("") || txttelefono.getText().equals("") || txtdireccion.getText().equals("") && txtID.getText().equals("")){
+        btnAgregar.setEnabled(false);
+    }
+    else{
+        btnAgregar.setEnabled(true);
+    }
+}
+
 void Limpiar(){
     txtdireccion.setText("");
     txtedad.setText("");
@@ -147,6 +156,9 @@ void Limpiar(){
     txttelefono.setText("");
     txtID.setText("");
     txtnombre.setText("");
+    btnModificar.setEnabled(false);
+    btnEliminar.setEnabled(false);
+    btnAgregar.setEnabled(false);
 }
 
     /**
@@ -208,17 +220,60 @@ void Limpiar(){
 
         jLabel2.setText("Nombre(s):");
 
+        txtnombre.addKeyListener(new java.awt.event.KeyAdapter() {
+            public void keyReleased(java.awt.event.KeyEvent evt) {
+                txtnombreKeyReleased(evt);
+            }
+        });
+
         jLabel3.setText("Apellido Paterno:");
+
+        txtpaterno.addKeyListener(new java.awt.event.KeyAdapter() {
+            public void keyReleased(java.awt.event.KeyEvent evt) {
+                txtpaternoKeyReleased(evt);
+            }
+        });
 
         jLabel4.setText("Apellido Materno:");
 
+        txtmaterno.addKeyListener(new java.awt.event.KeyAdapter() {
+            public void keyReleased(java.awt.event.KeyEvent evt) {
+                txtmaternoKeyReleased(evt);
+            }
+        });
+
         jLabel5.setText("Edad:");
 
+        txtedad.addKeyListener(new java.awt.event.KeyAdapter() {
+            public void keyReleased(java.awt.event.KeyEvent evt) {
+                txtedadKeyReleased(evt);
+            }
+            public void keyTyped(java.awt.event.KeyEvent evt) {
+                txtedadKeyTyped(evt);
+            }
+        });
+
         jLabel6.setText("Numero Telefonico:");
+
+        txttelefono.addKeyListener(new java.awt.event.KeyAdapter() {
+            public void keyReleased(java.awt.event.KeyEvent evt) {
+                txttelefonoKeyReleased(evt);
+            }
+            public void keyTyped(java.awt.event.KeyEvent evt) {
+                txttelefonoKeyTyped(evt);
+            }
+        });
+
+        txtdireccion.addKeyListener(new java.awt.event.KeyAdapter() {
+            public void keyReleased(java.awt.event.KeyEvent evt) {
+                txtdireccionKeyReleased(evt);
+            }
+        });
 
         jLabel7.setText("Dirección:");
 
         btnModificar.setText("Modificar");
+        btnModificar.setEnabled(false);
         btnModificar.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 btnModificarActionPerformed(evt);
@@ -226,6 +281,7 @@ void Limpiar(){
         });
 
         btnEliminar.setText("Eliminar");
+        btnEliminar.setEnabled(false);
         btnEliminar.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 btnEliminarActionPerformed(evt);
@@ -233,6 +289,7 @@ void Limpiar(){
         });
 
         btnAgregar.setText("Agregar");
+        btnAgregar.setEnabled(false);
         btnAgregar.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 btnAgregarActionPerformed(evt);
@@ -246,7 +303,7 @@ void Limpiar(){
             }
         });
 
-        txtID.setText("...");
+        txtID.setText("labelID");
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
@@ -392,6 +449,62 @@ void Limpiar(){
         new Menu().setVisible(true);
         this.setVisible(false);
     }//GEN-LAST:event_btnVolverActionPerformed
+
+    private void txtnombreKeyReleased(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_txtnombreKeyReleased
+        // TODO add your handling code here:
+        ChecarCampos();
+    }//GEN-LAST:event_txtnombreKeyReleased
+
+    private void txtpaternoKeyReleased(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_txtpaternoKeyReleased
+        // TODO add your handling code here:
+        ChecarCampos();
+    }//GEN-LAST:event_txtpaternoKeyReleased
+
+    private void txtmaternoKeyReleased(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_txtmaternoKeyReleased
+        // TODO add your handling code here:
+        ChecarCampos();
+    }//GEN-LAST:event_txtmaternoKeyReleased
+
+    private void txtedadKeyReleased(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_txtedadKeyReleased
+        // TODO add your handling code here:
+        ChecarCampos();
+    }//GEN-LAST:event_txtedadKeyReleased
+
+    private void txttelefonoKeyReleased(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_txttelefonoKeyReleased
+        // TODO add your handling code here:
+        ChecarCampos();
+    }//GEN-LAST:event_txttelefonoKeyReleased
+
+    private void txtdireccionKeyReleased(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_txtdireccionKeyReleased
+        // TODO add your handling code here:
+        ChecarCampos();
+    }//GEN-LAST:event_txtdireccionKeyReleased
+
+    private void txtedadKeyTyped(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_txtedadKeyTyped
+        // TODO add your handling code here:
+        int key = evt.getKeyChar();
+        
+        boolean numero = key >= 48 && key <= 57;
+        
+        if(!numero){
+            evt.consume();
+        }
+    }//GEN-LAST:event_txtedadKeyTyped
+
+    private void txttelefonoKeyTyped(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_txttelefonoKeyTyped
+        // TODO add your handling code here:
+        int key = evt.getKeyChar();
+        
+        boolean numero = key >= 48 && key <= 57;
+        
+        if(!numero){
+            evt.consume();
+        }
+        
+        if(txttelefono.getText().trim().length() == 10){
+            evt.consume();
+        }
+    }//GEN-LAST:event_txttelefonoKeyTyped
 
     /**
      * @param args the command line arguments

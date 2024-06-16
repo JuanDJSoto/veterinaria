@@ -134,6 +134,15 @@ void Llenar(){
         
     }
 
+void ChecarCampos(){
+    if(txtnombre.getText().equals("") || txttipo.getText().equals("") || txtcompra.getText().equals("") || txtventa.getText().equals("") || txtstock.getText().equals("") && txtID.getText().equals("")){
+        btnAgregar.setEnabled(false);
+    }
+    else{
+        btnAgregar.setEnabled(true);
+    }
+}
+
 void Limpiar(){
     txtcompra.setText("");
     txtventa.setText("");
@@ -141,6 +150,9 @@ void Limpiar(){
     txttipo.setText("");
     txtID.setText("");
     txtnombre.setText("");
+    btnModificar.setEnabled(false);
+    btnEliminar.setEnabled(false);
+    btnAgregar.setEnabled(false);
 }
 
     /**
@@ -174,11 +186,18 @@ void Limpiar(){
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
 
+        txtnombre.addKeyListener(new java.awt.event.KeyAdapter() {
+            public void keyReleased(java.awt.event.KeyEvent evt) {
+                txtnombreKeyReleased(evt);
+            }
+        });
+
         lblTitulo.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
         lblTitulo.setText("Gestion de Medicamentos");
         lblTitulo.setVerticalAlignment(javax.swing.SwingConstants.TOP);
 
         btnModificar.setText("Modificar");
+        btnModificar.setEnabled(false);
         btnModificar.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 btnModificarActionPerformed(evt);
@@ -207,7 +226,17 @@ void Limpiar(){
         });
         jScrollPane1.setViewportView(tblDB);
 
+        txtventa.addKeyListener(new java.awt.event.KeyAdapter() {
+            public void keyReleased(java.awt.event.KeyEvent evt) {
+                txtventaKeyReleased(evt);
+            }
+            public void keyTyped(java.awt.event.KeyEvent evt) {
+                txtventaKeyTyped(evt);
+            }
+        });
+
         btnEliminar.setText("Eliminar");
+        btnEliminar.setEnabled(false);
         btnEliminar.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 btnEliminarActionPerformed(evt);
@@ -216,12 +245,28 @@ void Limpiar(){
 
         jLabel6.setText("Stock:");
 
+        txttipo.addKeyListener(new java.awt.event.KeyAdapter() {
+            public void keyReleased(java.awt.event.KeyEvent evt) {
+                txttipoKeyReleased(evt);
+            }
+        });
+
         jLabel1.setText("ID:");
 
         btnAgregar.setText("Agregar");
+        btnAgregar.setEnabled(false);
         btnAgregar.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 btnAgregarActionPerformed(evt);
+            }
+        });
+
+        txtstock.addKeyListener(new java.awt.event.KeyAdapter() {
+            public void keyReleased(java.awt.event.KeyEvent evt) {
+                txtstockKeyReleased(evt);
+            }
+            public void keyTyped(java.awt.event.KeyEvent evt) {
+                txtstockKeyTyped(evt);
             }
         });
 
@@ -237,6 +282,15 @@ void Limpiar(){
         });
 
         jLabel2.setText("Nombre:");
+
+        txtcompra.addKeyListener(new java.awt.event.KeyAdapter() {
+            public void keyReleased(java.awt.event.KeyEvent evt) {
+                txtcompraKeyReleased(evt);
+            }
+            public void keyTyped(java.awt.event.KeyEvent evt) {
+                txtcompraKeyTyped(evt);
+            }
+        });
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
@@ -374,6 +428,64 @@ void Limpiar(){
         new Menu().setVisible(true);
         this.setVisible(false);
     }//GEN-LAST:event_btnVolverActionPerformed
+
+    private void txtnombreKeyReleased(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_txtnombreKeyReleased
+        // TODO add your handling code here:
+        ChecarCampos();
+    }//GEN-LAST:event_txtnombreKeyReleased
+
+    private void txttipoKeyReleased(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_txttipoKeyReleased
+        // TODO add your handling code here:
+        ChecarCampos();
+    }//GEN-LAST:event_txttipoKeyReleased
+
+    private void txtcompraKeyReleased(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_txtcompraKeyReleased
+        // TODO add your handling code here:
+        ChecarCampos();
+    }//GEN-LAST:event_txtcompraKeyReleased
+
+    private void txtventaKeyReleased(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_txtventaKeyReleased
+        // TODO add your handling code here:
+        ChecarCampos();
+    }//GEN-LAST:event_txtventaKeyReleased
+
+    private void txtstockKeyReleased(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_txtstockKeyReleased
+        // TODO add your handling code here:
+        ChecarCampos();
+    }//GEN-LAST:event_txtstockKeyReleased
+
+    private void txtcompraKeyTyped(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_txtcompraKeyTyped
+        // TODO add your handling code here:
+        int key = evt.getKeyChar();
+        
+        boolean numero = key >= 48 && key <= 57;
+        
+        if(!numero){
+            evt.consume();
+        }
+    }//GEN-LAST:event_txtcompraKeyTyped
+
+    private void txtventaKeyTyped(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_txtventaKeyTyped
+        // TODO add your handling code here:
+        int key = evt.getKeyChar();
+        
+        boolean numero = key >= 48 && key <= 57;
+        
+        if(!numero){
+            evt.consume();
+        }
+    }//GEN-LAST:event_txtventaKeyTyped
+
+    private void txtstockKeyTyped(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_txtstockKeyTyped
+        // TODO add your handling code here:
+        int key = evt.getKeyChar();
+        
+        boolean numero = key >= 48 && key <= 57;
+        
+        if(!numero){
+            evt.consume();
+        }
+    }//GEN-LAST:event_txtstockKeyTyped
 
     /**
      * @param args the command line arguments
