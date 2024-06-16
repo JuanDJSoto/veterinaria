@@ -188,7 +188,7 @@ String medicamento="";
     }
 
 void ChecarCampos(){
-    if(txtnombre.getText().equals("") || txtvalor.getText().equals("") && txtID.getText().equals("")){
+    if(txtnombre.getText().equals("") || txtvalor.getText().equals("") && txtID.getText().equals("") && btnEliminar.isEnabled() == true && btnModificar.isEnabled() == true){
         btnAgregar.setEnabled(false);
     }
     else{

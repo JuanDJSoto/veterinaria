@@ -133,7 +133,7 @@ void Llenar(){
     }
 
 void ChecarCampos(){
-    if(txtnombre.getText().equals("") || txttipo.getText().equals("") || txtcompra.getText().equals("") || txtventa.getText().equals("") || txtstock.getText().equals("") && txtID.getText().equals("")){
+    if(txtnombre.getText().equals("") || txttipo.getText().equals("") || txtcompra.getText().equals("") || txtventa.getText().equals("") || txtstock.getText().equals("") && txtID.getText().equals("") && btnEliminar.isEnabled() == true && btnModificar.isEnabled() == true){
         btnAgregar.setEnabled(false);
     }
     else{

@@ -144,7 +144,7 @@ void Llenar(){
     }
 
 void ChecarCampos(){
-    if(txtnombre.getText().equals("") || txtedad.getText().equals("") || txttipo.getText().equals("") || txtraza.getText().equals("") || txtcliente.getText().equals("") && txtID.getText().equals("")){
+    if(txtnombre.getText().equals("") || txtedad.getText().equals("") || txttipo.getText().equals("") || txtraza.getText().equals("") || txtcliente.getText().equals("") && txtID.getText().equals("") && btnEliminar.isEnabled() == true && btnModificar.isEnabled() == true){
         btnAgregar.setEnabled(false);
     }
     else{

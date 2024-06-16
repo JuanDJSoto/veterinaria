@@ -150,7 +150,7 @@ void Llenar(){
     }
 
 void ChecarCampos(){
-    if(txtnombre.getText().equals("") || txtpaterno.getText().equals("") || txtmaterno.getText().equals("") || txtedad.getText().equals("") || txttelefono.getText().equals("") || txtdireccion.getText().equals("") || txtpassword.getText().equals("") && txtID.getText().equals("")){
+    if(txtnombre.getText().equals("") || txtpaterno.getText().equals("") || txtmaterno.getText().equals("") || txtedad.getText().equals("") || txttelefono.getText().equals("") || txtdireccion.getText().equals("") || txtpassword.getText().equals("") && txtID.getText().equals("") && btnEliminar.isEnabled() == true && btnModificar.isEnabled() == true){
         btnAgregar.setEnabled(false);
     }
     else{

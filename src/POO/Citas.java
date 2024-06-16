@@ -83,7 +83,7 @@ void Llenar(){
     }
 
 void ChecarCampos(){
-    if(txtcliente.getText().equals("") || cmbservicio.toString().equals("") || cmbpago.toString().equals("") || dpfecha.toString().equals("") || dphora.toString().equals("")&& lblfolio.getText().equals("")){
+    if(txtcliente.getText().equals("") || cmbservicio.toString().equals("") || cmbpago.toString().equals("") || dpfecha.toString().equals("") || dphora.toString().equals("")&& lblfolio.getText().equals("") && btnEliminar.isEnabled() == true && btnModificar.isEnabled() == true){
         btnAgregar.setEnabled(false);
     }
     else{
