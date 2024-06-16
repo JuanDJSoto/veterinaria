@@ -433,6 +433,8 @@ void Vexistencia(){
         }catch (Exception e){
             e.printStackTrace();
         }
+            btnEliminar.setEnabled(true);
+            btnModificar.setEnabled(true);
         }
     }//GEN-LAST:event_tblDBMouseClicked
 

@@ -7,7 +7,6 @@ import java.sql.ResultSet;
 import java.sql.Connection;
 import java.sql.Statement;
 import java.sql.SQLException;
-import java.util.logging.Level;
 import javax.swing.JOptionPane;
 import javax.swing.table.DefaultTableModel;
 /**
@@ -122,7 +121,7 @@ void G_Cita(){
             conn.endRequest();
             conn.close();
         }catch (SQLException ex){
-            java.util.logging.Logger.getLogger(Generarcita.class.getName()).log(Level.SEVERE, null, ex);
+            JOptionPane.showMessageDialog(null, ex);
         }
 }
 
@@ -281,7 +280,7 @@ void combo(){
             conn.close();
         }catch (SQLException ex){
             JOptionPane.showMessageDialog(null, ex);
-            //java.util.logging.Logger.getLogger(Generarcita.class.getName()).log(Level.SEVERE, null, ex);
+            
         }
         //lblmonto.setText(precio);
 }
@@ -543,6 +542,8 @@ void combo(){
             }catch (Exception e){
                 e.printStackTrace();
             }
+            btnEliminar.setEnabled(true);
+            btnModificar.setEnabled(true);
         }
     }//GEN-LAST:event_tblDBMouseClicked
 
