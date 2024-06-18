@@ -219,6 +219,7 @@ void Limpiar(){
                 "Title 1", "Title 2", "Title 3", "Title 4"
             }
         ));
+        tblDB.setCursor(new java.awt.Cursor(java.awt.Cursor.DEFAULT_CURSOR));
         tblDB.addMouseListener(new java.awt.event.MouseAdapter() {
             public void mouseClicked(java.awt.event.MouseEvent evt) {
                 tblDBMouseClicked(evt);

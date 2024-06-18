@@ -502,15 +502,23 @@ public static boolean esNumerico(String valor){
 
     private void btnEliminarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnEliminarActionPerformed
         // TODO add your handling code here:
+        if(txtpassword.getText().equals("12345")&&txtnombre.getText().equals("admin")){
+            JOptionPane.showMessageDialog(null, "No es posible eliminar al primer usuario");
+}else{
         int dialogResult = JOptionPane.showConfirmDialog (null, "¿Está seguro de eliminar el usuario seleccionado?","Alerta",1);
             if(dialogResult == JOptionPane.YES_OPTION){
                 Eliminar();
             }
+}
     }//GEN-LAST:event_btnEliminarActionPerformed
 
     private void btnModificarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnModificarActionPerformed
         // TODO add your handling code here:
+        if(txtpassword.getText().equals("12345")&&txtnombre.getText().equals("admin")){
+            JOptionPane.showMessageDialog(null, "No es posible modificar al primer usuario");
+}else{
         Editar();
+        }
     }//GEN-LAST:event_btnModificarActionPerformed
 
     private void btnVolverActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnVolverActionPerformed

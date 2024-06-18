@@ -338,7 +338,6 @@ int multiplicador=0;
         int dialogResult = JOptionPane.showConfirmDialog (null, "El costo total sería de: "+to+". ¿Desea continuar con la venta?","Alerta",1);
             if(dialogResult == JOptionPane.YES_OPTION){
                 if(VCE.equals("P")){
-                    JOptionPane.showMessageDialog(null,Existencia);
                     if(Existencia<=0 || Existencia<multiplicador){
                         JOptionPane.showMessageDialog(null,"No se puede realizar la compra por falta de stock");
                     }else{

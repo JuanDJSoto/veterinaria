@@ -416,7 +416,7 @@ void Limpiar(){
 
     private void btnEliminarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnEliminarActionPerformed
         // TODO add your handling code here:
-        int dialogResult = JOptionPane.showConfirmDialog (null, "¿Está seguro de eliminar el medicamento seleccionado?","Alerta",1);
+        int dialogResult = JOptionPane.showConfirmDialog (null, "¿Está seguro de eliminar el producto seleccionado?","Alerta",1);
             if(dialogResult == JOptionPane.YES_OPTION){
                 Eliminar();
             }

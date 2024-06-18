@@ -261,10 +261,12 @@ void Vexistencia(){
   new Object[] { "Si", "No" },"Si");
      
  if (seleccion == 0){
-            Menu.VCE="1";
+            VEX="0";
             
            new GestionCliente().setVisible(true);
            this.setVisible(false);
+ }else{
+     VEX="0";
  }
         }
         
@@ -421,6 +423,11 @@ void Deuda(){
         tblDB.addMouseListener(new java.awt.event.MouseAdapter() {
             public void mouseClicked(java.awt.event.MouseEvent evt) {
                 tblDBMouseClicked(evt);
+            }
+        });
+        tblDB.addKeyListener(new java.awt.event.KeyAdapter() {
+            public void keyTyped(java.awt.event.KeyEvent evt) {
+                tblDBKeyTyped(evt);
             }
         });
         jScrollPane1.setViewportView(tblDB);
@@ -675,6 +682,10 @@ void Deuda(){
         // TODO add your handling code here:
         ChecarCampos();
     }//GEN-LAST:event_dphoraMouseExited
+
+    private void tblDBKeyTyped(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_tblDBKeyTyped
+        // TODO add your handling code here:
+    }//GEN-LAST:event_tblDBKeyTyped
 
     /**
      * @param args the command line arguments

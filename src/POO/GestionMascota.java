@@ -174,7 +174,6 @@ void Vexistencia(){
             ResultSet rs = sent.executeQuery(sql);
             String Exi=rs.getString(1);
             if(Exi!=""){
-                JOptionPane.showMessageDialog(null, "Si existe");
                 VEX="1";
             }
             conn.close();
@@ -185,9 +184,11 @@ void Vexistencia(){
   new Object[] { "Si", "No" },"Si");
      
  if (seleccion == 0){
+     VEX.equals("0");
            new GestionCliente().setVisible(true);
            this.setVisible(false);
  }if(seleccion==1){
+     VEX.equals("0");
  }
         }
         
@@ -445,7 +446,7 @@ void Vexistencia(){
             Nueva();
         }else{
             JOptionPane.showMessageDialog(null, "No se guardaron los datos");
-        }
+            }
     }//GEN-LAST:event_btnAgregarActionPerformed
 
     private void btnModificarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnModificarActionPerformed
@@ -490,14 +491,7 @@ void Vexistencia(){
     }//GEN-LAST:event_txtclienteKeyReleased
 
     private void txtedadKeyTyped(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_txtedadKeyTyped
-        // TODO add your handling code here:
-        int key = evt.getKeyChar();
-        
-        boolean numero = key >= 48 && key <= 57;
-        
-        if(!numero){
-            evt.consume();
-        }
+
     }//GEN-LAST:event_txtedadKeyTyped
 
     /**

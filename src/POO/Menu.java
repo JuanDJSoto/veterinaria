@@ -116,6 +116,7 @@ DefaultTableModel model;
                 "Folio", "Cliente", "Servicio", "Día", "Hora", "Pago", "Método de pago"
             }
         ));
+        jTable1.setCellSelectionEnabled(true);
         jScrollPane1.setViewportView(jTable1);
 
         servicios.setText("Ventas");
