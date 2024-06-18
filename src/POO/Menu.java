@@ -77,6 +77,7 @@ DefaultTableModel model;
         }
         
     }
+    
     /**
      * This method is called from within the constructor to initialize the form.
      * WARNING: Do NOT modify this code. The content of this method is always
@@ -117,12 +118,22 @@ DefaultTableModel model;
         ));
         jScrollPane1.setViewportView(jTable1);
 
-        servicios.setText("Pagos");
+        servicios.setText("Ventas");
 
-        jMenuItem17.setText("Productos");
+        jMenuItem17.setText("Venta de productos");
+        jMenuItem17.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jMenuItem17ActionPerformed(evt);
+            }
+        });
         servicios.add(jMenuItem17);
 
-        jMenuItem16.setText("Servicios");
+        jMenuItem16.setText("Deudas");
+        jMenuItem16.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jMenuItem16ActionPerformed(evt);
+            }
+        });
         servicios.add(jMenuItem16);
 
         jMenuBar1.add(servicios);
@@ -278,6 +289,18 @@ DefaultTableModel model;
         new Citas().setVisible(true);
         this.setVisible(false);
     }//GEN-LAST:event_menucitasMouseClicked
+
+    private void jMenuItem16ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jMenuItem16ActionPerformed
+        // TODO add your handling code here:
+        new Deudas().setVisible(true);
+        this.setVisible(false);
+    }//GEN-LAST:event_jMenuItem16ActionPerformed
+
+    private void jMenuItem17ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jMenuItem17ActionPerformed
+        // TODO add your handling code here:
+        new Ventas().setVisible(true);
+        this.setVisible(false);
+    }//GEN-LAST:event_jMenuItem17ActionPerformed
 
     /**
      * @param args the command line arguments

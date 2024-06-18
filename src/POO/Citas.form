@@ -35,7 +35,7 @@
                               <Component id="btnModificar" min="-2" pref="120" max="-2" attributes="0"/>
                               <EmptySpace type="unrelated" max="-2" attributes="0"/>
                               <Component id="btnEliminar" min="-2" pref="120" max="-2" attributes="0"/>
-                              <EmptySpace pref="157" max="32767" attributes="0"/>
+                              <EmptySpace max="32767" attributes="0"/>
                               <Component id="btnVolver" min="-2" pref="162" max="-2" attributes="0"/>
                           </Group>
                       </Group>
@@ -79,7 +79,7 @@
               <Component id="jLabel7" min="-2" max="-2" attributes="0"/>
               <EmptySpace type="unrelated" max="-2" attributes="0"/>
               <Component id="dphora" min="-2" max="-2" attributes="0"/>
-              <EmptySpace max="32767" attributes="0"/>
+              <EmptySpace pref="330" max="32767" attributes="0"/>
           </Group>
       </Group>
     </DimensionLayout>

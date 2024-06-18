@@ -4,19 +4,107 @@
  */
 package POO;
 
+import java.sql.Connection;
+import java.sql.ResultSet;
+import java.sql.Statement;
+import javax.swing.JOptionPane;
+import javax.swing.table.DefaultTableModel;
+
 /**
  *
  * @author gordi
  */
 public class Deudas extends javax.swing.JFrame {
-
+Connection conn;
+Statement sent;
+DefaultTableModel model;
+int pre,abono,restante,monto;
     /**
      * Creates new form Deudas
      */
     public Deudas() {
         initComponents();
+        txtID.setText("");
+            lblCliente.setText("");
+            lblDeuda.setText("");
+            lblRestante.setText("");
+            txtAbono.setText("");
+        setLocationRelativeTo(null);
+        Llenar();
     }
 
+    void Llenar(){
+        try {
+            conn = Login.getConnection();
+            String[] titulos ={"Folio","Folio del cliente","Cliente","Monto","Abonado","Restante"};
+            String sql = "Select * from Deudas";
+            model = new DefaultTableModel(null, titulos);
+            sent = conn.createStatement();
+            ResultSet rs = sent.executeQuery(sql);
+            String[] fila = new String[6];
+            while (rs.next()){
+                fila[0]=rs.getString("ID_Deuda");
+                fila[1]=rs.getString("ID_Cliente");
+                fila[2]=rs.getString("Nombre");
+                fila[3]=rs.getString("Monto");
+                fila[4]=rs.getString("Abonado");
+                fila[5]=rs.getString("Restante");
+                model.addRow(fila);
+            }
+            tblDB.setModel(model);
+            conn.close();
+        } catch (Exception e){
+            e.printStackTrace();
+        }
+    }
+    
+    void C_Deuda(){
+        abono = Integer.parseInt(txtAbono.getText());
+        restante = Integer.parseInt(lblRestante.getText());
+        pre=abono+pre;
+        monto=restante-abono;
+        if(monto>0){
+                try{
+            conn = Login.getConnection();
+            String sql = "UPDATE Deudas SET Abonado="
+                    +"'"+pre+"',Restante="
+                    +"'"+monto+"' "+"WHERE ID_Deuda='"
+                    +txtID.getText()+"'";
+            sent = conn.createStatement();
+            int n = sent.executeUpdate(sql);
+            if(n>0){
+                JOptionPane.showMessageDialog(null,"Deuda actualizada, Restante: "+monto);
+                
+            }
+            conn.close();
+        }catch (Exception e){
+            JOptionPane.showMessageDialog(null,e.getMessage());
+        }
+        }if(monto<0){
+            JOptionPane.showMessageDialog(null, "Error, abono mayor a la cantidad a liquidar");
+        }if(monto==0){
+            
+            try{
+            String sql = "DELETE from Deudas WHERE ID_Deuda='"
+                    +txtID.getText()+"'";
+            conn = Login.getConnection();
+            sent = conn.createStatement();
+            int n = sent.executeUpdate(sql);
+            
+            if(n>0){
+                JOptionPane.showMessageDialog(null,"Pago completado, deuda eliminada");
+                
+            }
+            conn.close();
+        }catch (Exception e){
+            JOptionPane.showMessageDialog(null,e.getMessage());
+        }
+        }
+        Llenar();
+        
+    }
+    
+    
     /**
      * This method is called from within the constructor to initialize the form.
      * WARNING: Do NOT modify this code. The content of this method is always
@@ -45,7 +133,11 @@ public class Deudas extends javax.swing.JFrame {
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
 
         btnAbonar.setText("Abonar");
-        btnAbonar.setEnabled(false);
+        btnAbonar.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnAbonarActionPerformed(evt);
+            }
+        });
 
         txtID.setText("labelID");
 
@@ -53,6 +145,12 @@ public class Deudas extends javax.swing.JFrame {
         btnVolver.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 btnVolverActionPerformed(evt);
+            }
+        });
+
+        txtAbono.addKeyListener(new java.awt.event.KeyAdapter() {
+            public void keyTyped(java.awt.event.KeyEvent evt) {
+                txtAbonoKeyTyped(evt);
             }
         });
 
@@ -183,12 +281,60 @@ public class Deudas extends javax.swing.JFrame {
         if (evt.getButton()==1){
             int fila = tblDB.getSelectedRow();
             try{
-                
+                conn = Login.getConnection();
+                //Habilitar();
+                String sql = "Select ID_Deuda,Nombre,Monto,Abonado,Restante from Deudas where ID_Deuda='" + tblDB.getValueAt(fila, 0)+"'";
+                sent = conn.createStatement();
+                ResultSet rs = sent.executeQuery(sql);
+                if(rs.getString("ID_Deuda")!=""){
+                    rs.next();
+                    txtID.setText(rs.getString("ID_Deuda"));
+                    lblCliente.setText(rs.getString("Nombre"));
+                    lblDeuda.setText(rs.getString("Monto"));
+                    pre = Integer.parseInt(rs.getString("Abonado"));
+                    lblRestante.setText(rs.getString("Restante"));
+                }else{
+                    JOptionPane.showMessageDialog(null, "Error");
+                }
+                conn.close();
             }catch (Exception e){
                 e.printStackTrace();
             }
         }
     }//GEN-LAST:event_tblDBMouseClicked
+
+    private void btnAbonarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnAbonarActionPerformed
+        // TODO add your handling code here:
+        if(txtID.getText().equals("")){
+            JOptionPane.showMessageDialog(null, "Por favor seleccione una deuda");
+}else{
+        if(!"".equals(txtAbono.getText())){
+            C_Deuda();
+            txtID.setText("");
+            lblCliente.setText("");
+            lblDeuda.setText("");
+            lblRestante.setText("");
+            txtAbono.setText("");
+            monto=0;
+        restante=0;
+        abono=0;
+        pre=0;
+        }else{
+            JOptionPane.showMessageDialog(null, "Por favor inserte el monto a abonar");
+        }
+        }
+    }//GEN-LAST:event_btnAbonarActionPerformed
+
+    private void txtAbonoKeyTyped(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_txtAbonoKeyTyped
+        // TODO add your handling code here:
+        int key = evt.getKeyChar();
+        
+        boolean numero = key >= 48 && key <= 57;
+        
+        if(!numero){
+            evt.consume();
+        }
+    }//GEN-LAST:event_txtAbonoKeyTyped
 
     /**
      * @param args the command line arguments

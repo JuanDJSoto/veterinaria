@@ -9,6 +9,7 @@ import java.sql.Statement;
 import java.sql.SQLException;
 import javax.swing.JOptionPane;
 import javax.swing.table.DefaultTableModel;
+import java.sql.Date;
 /**
  *
  * @author Juan Soto
@@ -21,6 +22,7 @@ String folio;
 String VEX="4";
 String combo;
 String precio="";
+String IDC="0";
 int Ncitas=0;
     /**
      * Creates new form Citas
@@ -37,7 +39,10 @@ int Ncitas=0;
             btnEliminar.setVisible(false);
         }
     }
-
+void a(){
+    Date date = java.sql.Date.valueOf(dpfecha.getDate());
+    JOptionPane.showMessageDialog(null, date);
+}
 void Llenarcombo(){
         try{
             conn=Login.getConnection();
@@ -185,8 +190,7 @@ void Nueva(){
         }catch (SQLException e){
             JOptionPane.showMessageDialog(null,e.getMessage());
         }
-        Limpiar();
-        Llenar();
+        
 }
 
 void Editar(){
@@ -212,8 +216,6 @@ void Editar(){
         }catch (Exception e){
             JOptionPane.showMessageDialog(null,e.getMessage());
         }
-        Limpiar();
-        Llenar();
 }
 
 void Eliminar(){
@@ -247,7 +249,7 @@ void Vexistencia(){
             ResultSet rs = sent.executeQuery(sql);
             String Exi=rs.getString(1);
             if(Exi!=""){
-                JOptionPane.showMessageDialog(null, "Si existe");
+                //JOptionPane.showMessageDialog(null, "Si existe");
                 VEX="1";
             }
             conn.endRequest();
@@ -283,6 +285,39 @@ void combo(){
             
         }
         //lblmonto.setText(precio);
+}
+
+void Deuda(){
+        try{
+            conn=Login.getConnection();
+            String sql ="Select ID_Cliente from Clientes where Nombre = '"
+                    +txtcliente.getText()+"'";
+            sent = conn.createStatement();
+            ResultSet rs = sent.executeQuery(sql);
+            IDC = rs.getString(1);
+            conn.close();
+        }catch (Exception e){
+            e.printStackTrace();
+        }
+        Folio();
+        try{
+            conn = Login.getConnection();
+            String sql = "insert into Deudas(ID_Deuda,ID_Cliente,Nombre,Monto,Abonado,Restante)"
+                    +"values("+"'"+folio+"','"+IDC+"','"+txtcliente.getText()+"',"
+                    +"'"+precio+"',"
+                    +"'0','"+precio+"')";
+            sent = conn.createStatement();
+            int n = sent.executeUpdate(sql);
+            if(n>0){
+                JOptionPane.showMessageDialog(null,"Deuda generada");
+                
+            }
+            conn.close();
+        }catch (SQLException e){
+            JOptionPane.showMessageDialog(null,e.getMessage());
+        }
+        Limpiar();
+        Llenar();
 }
     /**
      * This method is called from within the constructor to initialize the form.
@@ -437,7 +472,7 @@ void combo(){
                                 .addComponent(btnModificar, javax.swing.GroupLayout.PREFERRED_SIZE, 120, javax.swing.GroupLayout.PREFERRED_SIZE)
                                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                                 .addComponent(btnEliminar, javax.swing.GroupLayout.PREFERRED_SIZE, 120, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 157, Short.MAX_VALUE)
+                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                                 .addComponent(btnVolver, javax.swing.GroupLayout.PREFERRED_SIZE, 162, javax.swing.GroupLayout.PREFERRED_SIZE))))
                     .addGroup(layout.createSequentialGroup()
                         .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -472,7 +507,7 @@ void combo(){
                 .addComponent(jLabel7)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                 .addComponent(dphora, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                .addContainerGap(330, Short.MAX_VALUE))
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -552,11 +587,24 @@ void combo(){
         combo = cmbservicio.getSelectedItem().toString();
         Vexistencia();
         if (VEX.equals("1")){
-            combo();
-            int dialogResult = JOptionPane.showConfirmDialog (null, "El costo total del servicio sería de: $"+precio+". ¿Desea continuar?","Costo",1);
-        if(dialogResult == JOptionPane.YES_OPTION){
-            Nueva();
-        }
+            if(cmbpago.getSelectedItem().toString().equals("A crédito")){
+                combo();
+                int dialogResult = JOptionPane.showConfirmDialog (null, "La deuda generada por el servicio sería de: $"+precio+". ¿Desea continuar?","Costo",1);
+                if(dialogResult == JOptionPane.YES_OPTION){
+                Nueva();
+                Deuda();
+                Limpiar();
+                Llenar();
+                }
+            }if(cmbpago.getSelectedItem().toString().equals("Al contado")){
+                combo();
+                int dialog2 = JOptionPane.showConfirmDialog (null, "El costo total del servicio sería de: $"+precio+". ¿Desea continuar?","Costo",1);
+                if(dialog2 == JOptionPane.YES_OPTION){
+                Nueva();
+                Limpiar();
+                Llenar();
+                }
+            }
         }else{
             JOptionPane.showMessageDialog(null, "No se guardaron los datos");
         }
@@ -571,7 +619,24 @@ void combo(){
     private void btnModificarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnModificarActionPerformed
         // TODO add your handling code here:
         combo = cmbservicio.getSelectedItem().toString();
-        Editar();
+        if(cmbpago.getSelectedItem().toString().equals("A crédito")){
+                combo();
+                int dialogResult = JOptionPane.showConfirmDialog (null, "La deuda generada por el servicio sería de: $"+precio+". ¿Desea continuar?","Costo",1);
+                if(dialogResult == JOptionPane.YES_OPTION){
+                Editar();
+                Deuda();
+                Limpiar();
+                Llenar();
+                }
+            }if(cmbpago.getSelectedItem().toString().equals("Al contado")){
+                combo();
+                int dialog2 = JOptionPane.showConfirmDialog (null, "El costo total del servicio sería de: $"+precio+". ¿Desea continuar?","Costo",1);
+                if(dialog2 == JOptionPane.YES_OPTION){
+                Editar();
+                Limpiar();
+                Llenar();
+                }
+            }
     }//GEN-LAST:event_btnModificarActionPerformed
 
     private void btnEliminarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnEliminarActionPerformed
@@ -603,7 +668,7 @@ void combo(){
 
     private void dpfechaMouseExited(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_dpfechaMouseExited
         // TODO add your handling code here:
-        ChecarCampos();
+        //ChecarCampos();
     }//GEN-LAST:event_dpfechaMouseExited
 
     private void dphoraMouseExited(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_dphoraMouseExited
